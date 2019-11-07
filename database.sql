@@ -2,93 +2,22 @@
  * @author JurQo Holub
  */
 
-DROP TABLE IF EXISTS Admin_manages_User;
-DROP TABLE IF EXISTS Task_fulfill_Employee;
-DROP TABLE IF EXISTS Customer_own_Product;
-DROP TABLE IF EXISTS Task_fix_Ticket;
-DROP TABLE IF EXISTS Ticket;
-DROP TABLE IF EXISTS Commentar;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS User_Customer;
 DROP TABLE IF EXISTS User_Employee;
 DROP TABLE IF EXISTS User_Manager;
 DROP TABLE IF EXISTS User_Director;
 DROP TABLE IF EXISTS User_Admin;
-DROP TABLE IF EXISTS Task;
 DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Product_Part;
+DROP TABLE IF EXISTS Ticket;
+DROP TABLE IF EXISTS Commentar;
+DROP TABLE IF EXISTS Task;
+DROP TABLE IF EXISTS Task_fix_Ticket;
+DROP TABLE IF EXISTS Admin_manages_User;
+DROP TABLE IF EXISTS Task_fulfill_Employee;
+DROP TABLE IF EXISTS Customer_own_Product;
 
-CREATE TABLE Admin_manages_User (
-    id_admin INT NOT NULL,
-    id_user INT NOT NULL,
-    PRIMARY KEY (id_admin, id_user),
-    CONSTRAINT FK_admin_manages_user_user FOREIGN KEY (id_user) REFERENCES User (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_admin_manages_user_admin FOREIGN KEY (id_admin) REFERENCES User_Admin (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Task_fulfill_Employee (
-    id_task INT NOT NULL,
-    id_employee INT NOT NULL,
-    PRIMARY KEY (id_employee, id_task),
-    CONSTRAINT FK_task_fulfill_employee_task FOREIGN KEY (id_task) REFERENCES Task (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_task_fulfill_employee_employee FOREIGN KEY (id_employee) REFERENCES User_Employee (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Customer_own_Product (
-    id_user_customer INT NOT NULL,
-    id_product INT NOT NULL,
-    PRIMARY KEY (id_product, id_user_customer),
-    CONSTRAINT FK_customer_won_product_customer FOREIGN KEY (id_user_customer) REFERENCES User_Customer (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_customer_won_product_product FOREIGN KEY (id_product) REFERENCES Product (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Task_fix_Ticket (
-    id_ticket INT NOT NULL,
-    id_task INT NOT NULL,
-    PRIMARY KEY (id_task, id_ticket),
-    CONSTRAINT FK_task_fix_ticket_task FOREIGN KEY (id_task) REFERENCES Task (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_task_fix_ticket_ticket FOREIGN KEY (id_ticket) REFERENCES Ticket (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Ticket (
-    id INT AUTO_INCREMENT,
-    id_user_customer INT DEFAULT NULL,
-    id_product_part INT DEFAULT NULL,
-    id_user_manager INT DEFAULT NULL,
-    title VARCHAR(500) NOT NULL,
-    text VARCHAR(5000) NOT NULL,
-    state INT NOT NULL,
-    priority INT NOT NULL,
-    images LONGBLOB,
-    PRIMARY KEY (id),
-    CONSTRAINT FK_ticket_user_customer FOREIGN KEY (id_user_customer) REFERENCES User_Customer (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_ticket_product_part FOREIGN KEY (id_product_part) REFERENCES Product_Part (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_ticket_user_manager FOREIGN KEY (id_user_manager) REFERENCES User_Manager (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Commentar (
-    id INT AUTO_INCREMENT,
-    id_ticket INT DEFAULT NULL,
-    id_user INT DEFAULT NULL,
-    title VARCHAR(500) NOT NULL,
-    text VARCHAR(5000) NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT FK_commentar_ticket FOREIGN KEY (id_ticket) REFERENCES Ticket (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_commentar_user FOREIGN KEY (id_user) REFERENCES User (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
-);
 
 CREATE TABLE User (
     id INT AUTO_INCREMENT,
@@ -143,19 +72,6 @@ CREATE TABLE User_Admin (
                      ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Task (
-    id INT AUTO_INCREMENT,
-    id_user_manager INT DEFAULT NULL,
-    title VARCHAR(500) NOT NULL,
-    text VARCHAR(5000) NOT NULL,
-    supposed_time_hours INT NOT NULL,
-    spent_time_hours INT NOT NULL,
-    state INT NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT FK_task_user_manager FOREIGN KEY (id_user_manager) REFERENCES User_Manager (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE Product (
     id INT AUTO_INCREMENT,
     name VARCHAR(500) NOT NULL,
@@ -181,7 +97,94 @@ CREATE TABLE Product_Part (
                      ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-/*
- @TODO insert values
- @TODO wash your socks bráško
- */
+CREATE TABLE Ticket (
+    id INT AUTO_INCREMENT,
+    id_user_customer INT DEFAULT NULL,
+    id_product_part INT DEFAULT NULL,
+    id_user_manager INT DEFAULT NULL,
+    title VARCHAR(500) NOT NULL,
+    text VARCHAR(5000) NOT NULL,
+    state INT NOT NULL,
+    priority INT NOT NULL,
+    images LONGBLOB,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_ticket_user_customer FOREIGN KEY (id_user_customer) REFERENCES User_Customer (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ticket_product_part FOREIGN KEY (id_product_part) REFERENCES Product_Part (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_ticket_user_manager FOREIGN KEY (id_user_manager) REFERENCES User_Manager (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Commentar (
+    id INT AUTO_INCREMENT,
+    id_ticket INT DEFAULT NULL,
+    id_user INT DEFAULT NULL,
+    title VARCHAR(500) NOT NULL,
+    text VARCHAR(5000) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_commentar_ticket FOREIGN KEY (id_ticket) REFERENCES Ticket (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_commentar_user FOREIGN KEY (id_user) REFERENCES User (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Task (
+    id INT AUTO_INCREMENT,
+    id_user_manager INT DEFAULT NULL,
+    title VARCHAR(500) NOT NULL,
+    text VARCHAR(5000) NOT NULL,
+    supposed_time_hours INT NOT NULL,
+    spent_time_hours INT NOT NULL,
+    state INT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_task_user_manager FOREIGN KEY (id_user_manager) REFERENCES User_Manager (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Admin_manages_User (
+    id_admin INT NOT NULL,
+    id_user INT NOT NULL,
+    PRIMARY KEY (id_admin, id_user),
+    CONSTRAINT FK_admin_manages_user_user FOREIGN KEY (id_user) REFERENCES User (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_admin_manages_user_admin FOREIGN KEY (id_admin) REFERENCES User_Admin (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Task_fulfill_Employee (
+    id_task INT NOT NULL,
+    id_employee INT NOT NULL,
+    PRIMARY KEY (id_employee, id_task),
+    CONSTRAINT FK_task_fulfill_employee_task FOREIGN KEY (id_task) REFERENCES Task (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_task_fulfill_employee_employee FOREIGN KEY (id_employee) REFERENCES User_Employee (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Customer_own_Product (
+    id_user_customer INT NOT NULL,
+    id_product INT NOT NULL,
+    PRIMARY KEY (id_product, id_user_customer),
+    CONSTRAINT FK_customer_won_product_customer FOREIGN KEY (id_user_customer) REFERENCES User_Customer (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_customer_won_product_product FOREIGN KEY (id_product) REFERENCES Product (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Task_fix_Ticket (
+    id_ticket INT NOT NULL,
+    id_task INT NOT NULL,
+    PRIMARY KEY (id_task, id_ticket),
+    CONSTRAINT FK_task_fix_ticket_task FOREIGN KEY (id_task) REFERENCES Task (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_task_fix_ticket_ticket FOREIGN KEY (id_ticket) REFERENCES Ticket (id)
+                     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO User (id, name, surname, login, password, email, registration, bank_account)
+VALUES (1, 'Jozef', 'Novák', 'uzivatel01', '$2y$10$xRC30fcR0JD4KvecucaSIud3i.WbY63C8PKVmL8Imfld6GJX4bvxW', 'jozef.novak@gmail.com', CURRENT_DATE, 'CZ5508000000001234567899'),
+       (2, 'Karel', 'Svoboda', 'zamestanec01', '$2y$10$x.JWufno3hk0jGcb4innW.NydqqzzJcv.yYquvfPZ45GshBPsi9DC', 'karel.svoboda@gmail.com', CURRENT_DATE, 'CZ8975000000000012345671');
+
+INSERT INTO User_Customer (id) VALUES (1);
+INSERT INTO User_Employee (id) VALUES (2);
