@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="default_style.css">
-    <title>Title</title>
-</head>
-<body>
+<?php
+require "common.php";
 
-<div class="topnav">
-    <a href="unregistered_home_page.html">Home</a>
-    <a class="active" href="registered_user_profile.html">My profile</a>
-    <a href="unregistered_login_page.html">Log Out</a>
-</div>
+make_header('User profile');
+
+require_user();
+
+make_menu('profile');
+
+?>
+
 <table>
     <tr>
         <th align="left">Name</th>

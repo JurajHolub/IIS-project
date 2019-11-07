@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="default_style.css">
-</head>
+<?php
+
+require "common.php";
+
+make_header('Home page');
+
+make_menu('home');
+
+
+?>
 <script>
     function orderElems() {
         if (document.getElementById("ordering").value == "asc")
@@ -18,12 +22,6 @@
         }
     }
 </script>
-<body>
-
-<div class="topnav">
-    <a class="active" href="unregistered_home_page.html">Home</a>
-    <a href="unregistered_login_page.html">Log In</a>
-</div>
 
 <div style="padding-left:16px">
     <input type="text" placeholder="Search..">
