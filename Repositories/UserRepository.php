@@ -8,6 +8,7 @@ require 'UserRepositoryInterface.php';
 require '../Models/UserModel.php';
 
 
+use Models\UserModel;
 use PDO;
 
 
@@ -42,7 +43,7 @@ class UserRepository implements UserRepositoryInterface
         return $stmt->fetch();
     }
 
-    public function getByLogin($login)
+    public function getByLogin($login): ?UserModel
     {
         $stmt = $this->pdoDbConnection->prepare('
             SELECT *
@@ -59,7 +60,7 @@ class UserRepository implements UserRepositoryInterface
         }
     }
 
-    public function create($user_model)
+    public function create(UserModel $user_model)
     {
         $stmt = $this->pdoDbConnection->prepare('
            INSERT INTO User_Base
@@ -77,7 +78,7 @@ class UserRepository implements UserRepositoryInterface
         ]);
     }
 
-    public function update($user_model)
+    public function update(UserModel $user_model)
     {
         $stmt = $this->pdoDbConnection->prepare('
             UPDATE User_Base
@@ -85,16 +86,19 @@ class UserRepository implements UserRepositoryInterface
                 surname = :surname,
                 login = :login,
                 password = :password,
-                email = :email
+                email = :email,
+                bank_account = :bank_account
             WHERE id = :id
         ');
-        $stmt->bindParam(':id', $user_model->id);
-        $stmt->bindParam(':name', $user_model->name);
-        $stmt->bindParam(':surname', $user_model->surname);
-        $stmt->bindParam(':login', $user_model->login);
-        $stmt->bindParam(':password', $user_model->password);
-        $stmt->bindParam(':email', $user_model->email);
-        $stmt->execute();
+        $stmt->execute([
+            'name' => $user_model->name,
+            'surname' => $user_model->surname,
+            'login' => $user_model->login,
+            'password' => $user_model->password,
+            'email' => $user_model->email,
+            'bank_account' => $user_model->bank_account,
+            'id' => $user_model->id,
+        ]);
     }
 
     public function delete($user_id)
