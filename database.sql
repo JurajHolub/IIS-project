@@ -2,6 +2,9 @@
  * @author JurQo Holub
  */
 
+DROP DATABASE IF EXISTS iis_project_db;
+CREATE DATABASE iis_project_db;
+
 DROP TABLE IF EXISTS User_Base;
 DROP TABLE IF EXISTS User_Customer;
 DROP TABLE IF EXISTS User_Employee;

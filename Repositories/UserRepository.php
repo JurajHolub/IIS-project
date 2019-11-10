@@ -4,8 +4,8 @@
 namespace Repositories;
 
 
-require 'Repositories/UserRepositoryInterface.php';
-require 'Models/UserModel.php';
+require 'UserRepositoryInterface.php';
+require '../Models/UserModel.php';
 
 
 use PDO;
@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryInterface
     public function getAll()
     {
         $stmt = $this->pdoDbConnection->prepare('
-            SELECT * FROM User
+            SELECT * FROM User_Base
         ');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, 'Models\UserModel');
@@ -33,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $stmt = $this->pdoDbConnection->prepare('
             SELECT * 
-            FROM User
+            FROM User_Base
             WHERE id = :id
         ');
         $stmt->bindParam(':id', $user_id);
@@ -46,7 +46,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $stmt = $this->pdoDbConnection->prepare('
             SELECT *
-            FROM USER
+            FROM User_Base
             WHERE login = :login
         ');
         $stmt->bindParam(':login', $login);
@@ -61,25 +61,26 @@ class UserRepository implements UserRepositoryInterface
 
     public function create($user_model)
     {
-        //TODO
         $stmt = $this->pdoDbConnection->prepare('
-           INSERT INTO User
-               (name, surname, login, password, email, date)
+           INSERT INTO User_Base
+               (name, surname, login, password, email, registration, bank_account)
            VALUES
-               (:name, :surname, :login, :password, :email, NOW())
+               (:name, :surname, :login, :password, :email, CURRENT_DATE, :bank_account )
         ');
-        $stmt->bindParam(':name', $user_model->name);
-        $stmt->bindParam(':surname', $user_model->surname);
-        $stmt->bindParam(':login', $user_model->login);
-        $stmt->bindParam(':password', $user_model->password);
-        $stmt->bindParam(':email', $user_model->email);
-        $stmt->execute();
+        $stmt->execute([
+            'name' => $user_model->name,
+            'surname' => $user_model->surname,
+            'login' => $user_model->login,
+            'password' => $user_model->password,
+            'email' => $user_model->email,
+            'bank_account' => $user_model->bank_account,
+        ]);
     }
 
     public function update($user_model)
     {
         $stmt = $this->pdoDbConnection->prepare('
-            UPDATE User
+            UPDATE User_Base
             SET name = :name,
                 surname = :surname,
                 login = :login,
@@ -100,7 +101,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $stmt = $this->pdoDbConnection->prepare('
             DELETE
-            FROM User
+            FROM User_Base
             WHERE id = :id
         ');
         $stmt->bindParam(':id', $user_id);
