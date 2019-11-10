@@ -1,8 +1,8 @@
 <?php
 
 require "common.php";
-require 'Repositories/UserRepository.php';
-require 'Factories/PdoDbConnectionFactory.php';
+require '../Repositories/UserRepository.php';
+require '../Factories/PdoDbConnectionFactory.php';
 
 use Repositories\UserRepository;
 use Factories\PdoDbConnectionFactory;

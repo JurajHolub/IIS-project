@@ -1,7 +1,7 @@
 <?php
 require "common.php";
-require 'Repositories/UserRepository.php';
-require 'Factories/PdoDbConnectionFactory.php';
+require '../Repositories/UserRepository.php';
+require '../Factories/PdoDbConnectionFactory.php';
 
 use Repositories\UserRepository;
 use Factories\PdoDbConnectionFactory;
@@ -14,7 +14,9 @@ make_header('Login');
 <?php
 if (isset($_SESSION['user'])) {
     redirect('register_edit_profile.php');
-} else {
+}
+else
+{
     if (!isset($_POST['login']) || !isset($_POST['password'])) {
         redirect('login_page.php');
     }
@@ -24,11 +26,14 @@ if (isset($_SESSION['user'])) {
     $user_repository = new UserRepository(new PdoDbConnectionFactory);
     $user = $user_repository->getByLogin($login);
 
-    if ($user == null || $user->password != $password) {
-        echo "<p>Incorrect login</p>";
-    } else {
+    if (!is_null($user) && $user->password === $password)
+    {
         $_SESSION['user'] = $user->login;
         redirect('home.php');
+    }
+    else
+    {
+        echo "<p>Incorrect login</p>";
     }
 }
 

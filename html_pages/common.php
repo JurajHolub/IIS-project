@@ -33,13 +33,13 @@ function make_menu($active_elemnt)
     ?>
     <div class="topnav">
         <a
-            <?php if ($active_elemnt == "home") echo 'class="active"'; ?>
+            <?php if ($active_elemnt === 'home') echo 'class="active"'; ?>
                 href="home.php">Home</a>
         <?php
         if (isset($_SESSION['user'])) {
             ?>
             <a
-                <?php if ($active_elemnt == "profile") echo 'class="active"'; ?>
+                <?php if ($active_elemnt === 'profile') echo 'class="active"'; ?>
                     href="edit_profile.php">My profile</a>
 
             <a
@@ -48,8 +48,11 @@ function make_menu($active_elemnt)
         } else {
             ?>
             <a
-                <?php if ($active_elemnt == "login") echo 'class="active"'; ?>
+                <?php if ($active_elemnt === 'login') echo 'class="active"'; ?>
                     href="login_page.php">Log In</a>
+            <a
+                <?php if ($active_elemnt === 'register') echo 'class="active"'; ?>
+                    href="register_page.php">Register</a>
             <?php
         }
         ?>
