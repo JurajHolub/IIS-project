@@ -14,24 +14,36 @@ else
     <div>
         <form action="register.php" method="post">
             <p>Login</p>
-            <input type="text" name="login" placeholder="Enter Login"required>
+            <input type="text" name="login" id="login" placeholder="Enter Login"required>
             <p>Name</p>
-            <input type="text" name="name" placeholder="Enter Name">
+            <input type="text" name="name" id="name" placeholder="Enter Name">
             <p>Surname</p>
-            <input type="text" name="surname" placeholder="Enter Surname">
+            <input type="text" name="surname" id="surname" placeholder="Enter Surname">
             <p>Email</p>
-            <input type="text" name="email" placeholder="Enter email"required>
+            <input type="text" name="email" id="email" placeholder="Enter email"required>
             <p>Bank account</p>
-            <input type="text" name="bank" placeholder="Enter bank account">
+            <input type="text" name="bank" id="bank" placeholder="Enter bank account">
             <p>Password</p>
-            <input type="password" name="password0" placeholder="Enter Password"required>
+            <input type="password" name="password0" id="password0" placeholder="Enter Password"required>
             <br>
-            <input type="password" name="password1" placeholder="Repeat Password"required>
+            <input type="password" name="password1" id="password1" placeholder="Repeat Password"required>
             <br>
             <input type="submit" value="Register"/>
         </form>
     </div>
 <?php
+if (isset($_SESSION['registration_fail']))
+{
+    if ($_SESSION['registration_fail'] === 'password')
+    {
+        echo "<strong>Password does not match!</strong>";
+    }
+    if ($_SESSION['registration_fail'] === 'login')
+    {
+        echo "<strong>User with such profile already exist!</strong>";
+    }
+    unset($_SESSION['registration_fail']);
+}
 }?>
 
 </body>

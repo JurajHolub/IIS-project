@@ -6,20 +6,12 @@ require '../Factories/PdoDbConnectionFactory.php';
 use Repositories\UserRepository;
 use Factories\PdoDbConnectionFactory;
 
-make_header('Login');
-?>
-
-<h1>Login</h1>
-
-<?php
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user']))
+{
     redirect('register_edit_profile.php');
 }
 else
 {
-    if (!isset($_POST['login']) || !isset($_POST['password'])) {
-        redirect('login_page.php');
-    }
     $login = $_POST['login'];
     $password = $_POST['password'];
 
@@ -33,9 +25,7 @@ else
     }
     else
     {
-        echo "<p>Incorrect login</p>";
+        $_SESSION['login_attemp'] = true;
+        redirect('login_page.php');
     }
 }
-
-make_footer();
-?>

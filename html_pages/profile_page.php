@@ -22,9 +22,36 @@ $user = $user_repository->getByLogin($_SESSION['user']);
     Login: <input type="text" name="login" readonly value=<?php echo "\"$user->login\""; ?>><br>
     Email: <input type="text" name="email" value=<?php echo "\"$user->email\""; ?>><br>
     Bank account: <input type="text" name="bank_account" value=<?php echo "\"$user->bank_account\""; ?>><br>
-    Enter new password: <input type="password" name="password0"><br>
-    Reenter new password: <input type="password" name="password1"><br>
+    Old password: <input type="password" name="password0"><br>
+    Enter new password: <input type="password" name="password1"><br>
+    Reenter new password: <input type="password" name="password2"><br>
     <input type="submit" value="Submit request">
 </form>
+<?php
+if (isset($_SESSION['password_change']))
+{
+    if ($_SESSION['password_change'] === true)
+    {
+        echo "<strong>Password successfuly changed!</strong>";
+    }
+    else
+    {
+        echo "<strong>Password does not match!</strong>";
+    }
+    unset($_SESSION['password_change']);
+}
+if (isset($_SESSION['profile_update']))
+{
+    if ($_SESSION['profile_update'] === true)
+    {
+        echo "<strong>Profile updated!</strong>";
+    }
+    else
+    {
+        echo "<strong>User with this login already exist!</strong>";
+    }
+    unset($_SESSION['profile_update']);
+}
+?>
 </body>
 </html>

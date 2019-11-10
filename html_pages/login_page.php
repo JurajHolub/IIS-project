@@ -10,7 +10,7 @@ if (isset($_SESSION['user']))
 }
 else
 {
-?>
+    ?>
     <div>
         <form action="login.php" method="post">
             <p>Login</p>
@@ -21,7 +21,13 @@ else
             <input type="submit" value="Log In"/>
         </form>
     </div>
-<?php
-}?>
+    <?php
+    if (isset($_SESSION['login_attemp']))
+    {
+        echo "<strong>Login failed!</strong>";
+        unset($_SESSION['login_attemp']);
+    }
+}
+?>
 
 </body>

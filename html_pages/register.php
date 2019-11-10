@@ -7,13 +7,6 @@ use Repositories\UserRepository;
 use Factories\PdoDbConnectionFactory;
 use Models\UserModel;
 
-make_header('Login');
-?>
-
-<h1>Register</h1>
-
-<?php
-
 function get_data($data)
 {
     if (isset($_POST[$data]))
@@ -26,28 +19,22 @@ function get_data($data)
     }
 }
 
-if (isset($_SESSION['user'])) {
-    redirect('register_edit_profile.php');
+$user_repository = new UserRepository(new PdoDbConnectionFactory);
+$login = $_POST['login'];
+$password0 = $_POST['password0'];
+$password1 = $_POST['password1'];
+if (!is_null($user_repository->getByLogin($login)))
+{
+    $_SESSION['registration_fail'] = 'login';
+    redirect('register_page.php');
+}
+else if ($password0 !== $password1)
+{
+    $_SESSION['registration_fail'] = 'password';
+    redirect('register_page.php');
 }
 else
 {
-    $login = $_POST['login'];
-    $user_repository = new UserRepository(new PdoDbConnectionFactory);
-
-    if (!is_null($user_repository->getByLogin($login)))
-    {
-        echo "<p>".$login." already exist!"."</p>";
-        redirect('register_page.php');
-    }
-
-    $password0 = $_POST['password0'];
-    $password1 = $_POST['password1'];
-
-    if ($password0 !== $password1)
-    {
-        redirect('login_page.php');
-    }
-
     $user = new UserModel();
     $user->login = $login;
     $user->email = get_data('email');
@@ -59,9 +46,6 @@ else
     $user_repository->create($user);
 
     $_SESSION['user'] = $user->login;
-    $tmp = $user_repository->getByLogin($login);
     redirect('home.php');
 }
 
-make_footer();
-?>
