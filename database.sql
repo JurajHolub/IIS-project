@@ -2,7 +2,7 @@
  * @author JurQo Holub
  */
 
-DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS User_Base;
 DROP TABLE IF EXISTS User_Customer;
 DROP TABLE IF EXISTS User_Employee;
 DROP TABLE IF EXISTS User_Manager;
@@ -19,8 +19,8 @@ DROP TABLE IF EXISTS Task_fulfill_Employee;
 DROP TABLE IF EXISTS Customer_own_Product;
 
 
-CREATE TABLE User (
-    id INT AUTO_INCREMENT,
+CREATE TABLE User_Base (
+    id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50),
     surname VARCHAR(50),
     login VARCHAR(50) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE User_Customer (
     id INT NOT NULL,
     social_networks VARCHAR(500),
     PRIMARY KEY (id),
-    CONSTRAINT FK_user_customer_user FOREIGN KEY (id) REFERENCES User (id)
+    CONSTRAINT FK_user_customer_user FOREIGN KEY (id) REFERENCES User_Base (id)
                      ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE User_Employee (
     id INT NOT NULL,
     employment_type VARCHAR(500),
     PRIMARY KEY (id),
-    CONSTRAINT FK_user_employee_user FOREIGN KEY (id) REFERENCES User (id)
+    CONSTRAINT FK_user_employee_user FOREIGN KEY (id) REFERENCES User_Base (id)
                      ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -73,7 +73,7 @@ CREATE TABLE User_Admin (
 );
 
 CREATE TABLE Product (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(500) NOT NULL,
     text VARCHAR(5000) NOT NULL,
     version INT NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE Product_Part (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     id_product INT NOT NULL,
     name VARCHAR(500) NOT NULL,
     text VARCHAR(5000) NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE Product_Part (
 );
 
 CREATE TABLE Ticket (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     id_user_customer INT DEFAULT NULL,
     id_product_part INT DEFAULT NULL,
     id_user_manager INT DEFAULT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE Ticket (
 );
 
 CREATE TABLE Commentar (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     id_ticket INT DEFAULT NULL,
     id_user INT DEFAULT NULL,
     title VARCHAR(500) NOT NULL,
@@ -125,12 +125,12 @@ CREATE TABLE Commentar (
     PRIMARY KEY (id),
     CONSTRAINT FK_commentar_ticket FOREIGN KEY (id_ticket) REFERENCES Ticket (id)
                      ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_commentar_user FOREIGN KEY (id_user) REFERENCES User (id)
+    CONSTRAINT FK_commentar_user FOREIGN KEY (id_user) REFERENCES User_Base (id)
                      ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Task (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     id_user_manager INT DEFAULT NULL,
     title VARCHAR(500) NOT NULL,
     text VARCHAR(5000) NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE Admin_manages_User (
     id_admin INT NOT NULL,
     id_user INT NOT NULL,
     PRIMARY KEY (id_admin, id_user),
-    CONSTRAINT FK_admin_manages_user_user FOREIGN KEY (id_user) REFERENCES User (id)
+    CONSTRAINT FK_admin_manages_user_user FOREIGN KEY (id_user) REFERENCES User_Base (id)
                      ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_admin_manages_user_admin FOREIGN KEY (id_admin) REFERENCES User_Admin (id)
                      ON DELETE CASCADE ON UPDATE CASCADE
@@ -182,9 +182,6 @@ CREATE TABLE Task_fix_Ticket (
                      ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO User (id, name, surname, login, password, email, registration, bank_account)
-VALUES (1, 'Jozef', 'Novák', 'uzivatel01', '$2y$10$xRC30fcR0JD4KvecucaSIud3i.WbY63C8PKVmL8Imfld6GJX4bvxW', 'jozef.novak@gmail.com', CURRENT_DATE, 'CZ5508000000001234567899'),
-       (2, 'Karel', 'Svoboda', 'zamestanec01', '$2y$10$x.JWufno3hk0jGcb4innW.NydqqzzJcv.yYquvfPZ45GshBPsi9DC', 'karel.svoboda@gmail.com', CURRENT_DATE, 'CZ8975000000000012345671');
-
-INSERT INTO User_Customer (id) VALUES (1);
-INSERT INTO User_Employee (id) VALUES (2);
+INSERT INTO User_Base (name, surname, login, password, email, registration, bank_account)
+VALUES ('Jozef', 'Novák', 'uzivatel01', 'uzivatel01', 'jozef.novak@gmail.com', CURRENT_DATE, 'CZ5508000000001234567899'),
+       ('Karel', 'Svoboda', 'zamestanec01', 'zamestanec01', 'karel.svoboda@gmail.com', CURRENT_DATE, 'CZ8975000000000012345671');
