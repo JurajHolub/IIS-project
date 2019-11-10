@@ -40,7 +40,7 @@ function make_menu($active_elemnt)
             ?>
             <a
                 <?php if ($active_elemnt === 'profile') echo 'class="active"'; ?>
-                    href="edit_profile.php">My profile</a>
+                    href="profile_page.php">My profile</a>
 
             <a
                     href="logout.php">Log Out</a>
