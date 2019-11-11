@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Icon -->
-    <link rel="icon" href="icon.png" type="image/png"/>
+    <link rel="icon" href="{{ asset('icon.png') }}" type="image/png"/>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
