@@ -29,9 +29,19 @@ class EditProfileController extends Controller
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $data = request()->except('_token', "password_confirmation");
+        $data = request()->except('_token', "password", "password_confirmation");
         $data = array_filter($data);
+
+        //update everthing except password
         \App\User::where('id', Auth::id())->update($data);
+
+        //update password
+        if (!is_null(request("password"))) {
+            \App\User::where('id', Auth::id())
+                ->update([
+                    'password' => Hash::make(request("password")),
+                    ]);
+        }
         return redirect()->back();
     }
 }
