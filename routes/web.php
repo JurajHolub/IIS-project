@@ -16,3 +16,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes(['reset' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/profile', 'EditProfileController@index')->name('profile');
+Route::post('/profile', 'EditProfileController@update');
+
