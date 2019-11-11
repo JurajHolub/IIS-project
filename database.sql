@@ -2,9 +2,9 @@
  * @author JurQo Holub
  */
 
-DROP DATABASE IF EXISTS iis_project_db;
-CREATE DATABASE iis_project_db;
+USE xholub40;
 
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS User_Base;
 DROP TABLE IF EXISTS User_Customer;
 DROP TABLE IF EXISTS User_Employee;
@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS Task_fix_Ticket;
 DROP TABLE IF EXISTS Admin_manages_User;
 DROP TABLE IF EXISTS Task_fulfill_Employee;
 DROP TABLE IF EXISTS Customer_own_Product;
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 CREATE TABLE User_Base (
@@ -40,7 +41,7 @@ CREATE TABLE User_Customer (
     social_networks VARCHAR(500),
     PRIMARY KEY (id),
     CONSTRAINT FK_user_customer_user FOREIGN KEY (id) REFERENCES User_Base (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE User_Employee (
@@ -48,7 +49,7 @@ CREATE TABLE User_Employee (
     employment_type VARCHAR(500),
     PRIMARY KEY (id),
     CONSTRAINT FK_user_employee_user FOREIGN KEY (id) REFERENCES User_Base (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE User_Manager (
@@ -56,7 +57,7 @@ CREATE TABLE User_Manager (
     language_skill VARCHAR(500),
     PRIMARY KEY (id),
     CONSTRAINT FK_user_manager_user_user_emplayee FOREIGN KEY (id) REFERENCES User_Employee (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE User_Director (
@@ -64,7 +65,7 @@ CREATE TABLE User_Director (
     division VARCHAR(500),
     PRIMARY KEY (id),
     CONSTRAINT FK_user_director_user_manager FOREIGN KEY (id) REFERENCES User_Manager (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE User_Admin (
@@ -72,7 +73,7 @@ CREATE TABLE User_Admin (
     certificate VARCHAR(500),
     PRIMARY KEY (id),
     CONSTRAINT FK_user_admin_user_director FOREIGN KEY (id) REFERENCES User_Director (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Product (
@@ -85,7 +86,7 @@ CREATE TABLE Product (
     id_user_director INT DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_product_user_director FOREIGN KEY (id_user_director) REFERENCES User_Director (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Product_Part (
@@ -97,7 +98,7 @@ CREATE TABLE Product_Part (
     last_actualization DATE NOT NULL,
     PRIMARY KEY (id, id_product),
     CONSTRAINT FK_product_part_product FOREIGN KEY (id_product) REFERENCES Product (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Ticket (
@@ -112,11 +113,11 @@ CREATE TABLE Ticket (
     images LONGBLOB,
     PRIMARY KEY (id),
     CONSTRAINT FK_ticket_user_customer FOREIGN KEY (id_user_customer) REFERENCES User_Customer (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
+                     ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT FK_ticket_product_part FOREIGN KEY (id_product_part) REFERENCES Product_Part (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
+                     ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT FK_ticket_user_manager FOREIGN KEY (id_user_manager) REFERENCES User_Manager (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Commentar (
@@ -127,9 +128,9 @@ CREATE TABLE Commentar (
     text VARCHAR(5000) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_commentar_ticket FOREIGN KEY (id_ticket) REFERENCES Ticket (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
+                     ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT FK_commentar_user FOREIGN KEY (id_user) REFERENCES User_Base (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Task (
@@ -142,7 +143,7 @@ CREATE TABLE Task (
     state INT NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FK_task_user_manager FOREIGN KEY (id_user_manager) REFERENCES User_Manager (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Admin_manages_User (
@@ -150,9 +151,9 @@ CREATE TABLE Admin_manages_User (
     id_user INT NOT NULL,
     PRIMARY KEY (id_admin, id_user),
     CONSTRAINT FK_admin_manages_user_user FOREIGN KEY (id_user) REFERENCES User_Base (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
+                     ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT FK_admin_manages_user_admin FOREIGN KEY (id_admin) REFERENCES User_Admin (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Task_fulfill_Employee (
@@ -160,9 +161,9 @@ CREATE TABLE Task_fulfill_Employee (
     id_employee INT NOT NULL,
     PRIMARY KEY (id_employee, id_task),
     CONSTRAINT FK_task_fulfill_employee_task FOREIGN KEY (id_task) REFERENCES Task (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
+                     ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT FK_task_fulfill_employee_employee FOREIGN KEY (id_employee) REFERENCES User_Employee (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Customer_own_Product (
@@ -170,9 +171,9 @@ CREATE TABLE Customer_own_Product (
     id_product INT NOT NULL,
     PRIMARY KEY (id_product, id_user_customer),
     CONSTRAINT FK_customer_won_product_customer FOREIGN KEY (id_user_customer) REFERENCES User_Customer (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
+                     ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT FK_customer_won_product_product FOREIGN KEY (id_product) REFERENCES Product (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Task_fix_Ticket (
@@ -180,9 +181,9 @@ CREATE TABLE Task_fix_Ticket (
     id_task INT NOT NULL,
     PRIMARY KEY (id_task, id_ticket),
     CONSTRAINT FK_task_fix_ticket_task FOREIGN KEY (id_task) REFERENCES Task (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE,
+                     ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT FK_task_fix_ticket_ticket FOREIGN KEY (id_ticket) REFERENCES Ticket (id)
-                     ON DELETE CASCADE ON UPDATE CASCADE
+                     ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 INSERT INTO User_Base (name, surname, login, password, email, registration, bank_account)

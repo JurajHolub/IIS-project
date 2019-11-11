@@ -43,7 +43,7 @@ class UserRepository implements UserRepositoryInterface
         return $stmt->fetch();
     }
 
-    public function getByLogin($login): ?UserModel
+    public function getByLogin($login)
     {
         $stmt = $this->pdoDbConnection->prepare('
             SELECT *
