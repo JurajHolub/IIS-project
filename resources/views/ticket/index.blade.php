@@ -3,10 +3,10 @@
 @section ('title', 'Tickets')
 
 @section('content')
-    <div class="container mb-3">
-        <form method="GET" action="">
-            <div class="row">
-                <div class="input-group col-md-3">
+    <div class="container col-md-9">
+        <div class="row mb-3">
+        <form class="col-md-3" method="GET" action="">
+            <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Sort:</span>
                 </div>
@@ -18,11 +18,10 @@
                     <option @if ( $sort == "least_commented" ) selected @endif>Least commented</option>
                 </select>
             </div>
-            </div>
         </form>
-    </div>
+        <a class="btn btn-success ml-auto mr-3" href="tickets/create">New issue</a>
+            </div>
 
-    <div class="container">
         <div class="list-group">
             @forelse($tickets as $ticket)
                 <div class="list-group-item my-link" id="ticket-{{ $ticket->id }}">
