@@ -23,7 +23,15 @@ class TicketController extends Controller
 
         if (!isset($request["sort"]) || $request["sort"] === "Recently updated")
         {
-            $tickets = Ticket::orderBy('updated_at', 'desc')->get();
+            //source: https://laracasts.com/discuss/channels/laravel/how-do-i-sort-posts-both-by-posts-created-at-and-comments-created-at
+            $tickets = Ticket::all()
+                ->sortByDesc(function ($ticket) {
+                    $recentComment = $ticket->comments->sortByDesc('created_at')->first();
+                    if (!$recentComment) {
+                        return $ticket->created_at;
+                    }
+                    return $recentComment->created_at->max($ticket->created_at);
+                });
             $sort = "recently_updated";
         }
         elseif($request["sort"] === "Oldest") {
@@ -36,13 +44,12 @@ class TicketController extends Controller
         }
         elseif ($request["sort"] === "Most commented")
         {
-            $tickets = Ticket::orderBy('updated_at', 'desc')->get();
-            $sort = "recently_updated";
-        }
-        elseif ($request["sort"] === "Least Commented")
-        {
-            $tickets = Ticket::orderBy('updated_at', 'desc')->get();
-            $sort = "recently_updated";
+            $tickets = Ticket::all()
+                ->sortByDesc(function ($ticket) {
+                    return $ticket->comments->count();
+                });
+
+            $sort = "most_commented";
         }
         else
         {

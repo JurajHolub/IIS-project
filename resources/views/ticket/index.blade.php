@@ -7,17 +7,15 @@
         <div class="row mb-3">
             <div class="col-lg-3 mb-3 mb-lg-0">
                 <form method="GET" action="">
-                    @csrf
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Sort:</span>
                         </div>
                         <select class="form-control" id="sel1" name="sort" onchange="this.form.submit()">
+                            <option @if ( $sort == "recently_updated" ) selected @endif>Recently updated</option>
                             <option @if ( $sort == "newest" ) selected @endif>Newest</option>
                             <option @if ( $sort == "oldest" ) selected @endif>Oldest</option>
-                            <option @if ( $sort == "recently_updated" ) selected @endif>Recently updated</option>
                             <option @if ( $sort == "most_commented" ) selected @endif>Most commented</option>
-                            <option @if ( $sort == "least_commented" ) selected @endif>Least commented</option>
                         </select>
                     </div>
                 </form>
