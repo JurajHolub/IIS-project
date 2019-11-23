@@ -61,16 +61,23 @@ class TicketController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'priority' => 'required',
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'priority' => ['required', 'numeric', 'integer'],
+            'image' => ['nullable', 'image']
         ]);
-        request()->validate(['image' => 'nullable|image']);
 
-        $user = User::find(Auth::id());
-        $user->tickets()->create($data);
+        $ticket = new Ticket([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'state' => 'open',
+            'priority' => $data['priority'],
+            'author_id' => Auth::id(),
+        ]);
 
-        return $this->index();
+        $ticket->save();
+
+        return redirect('/tickets/'.$ticket->id);
     }
 
     public function show($id)

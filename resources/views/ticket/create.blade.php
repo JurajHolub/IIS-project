@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <form method="post">
+        <form method="POST" action="{{ route('issues') }}">
             @csrf
             <div class="form-group">
                 <label for="title">Title</label>
