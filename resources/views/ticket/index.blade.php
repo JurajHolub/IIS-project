@@ -32,11 +32,13 @@
                 <div class="list-group">
                     @forelse($tickets as $ticket)
                         <div class="list-group-item my-link" id="ticket-{{ $ticket->id }}">
-                            <strong><a href="tickets/{{ $ticket->id }}">{{ $ticket->title }}</a></strong>
+                            <strong><a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a></strong>
                             <p class="info mb-0 mt-3 p-0">
                                 Opened by <a href="#">{{ $ticket->author->login }}</a>
                                 {{ $ticket->updated_at->diffForHumans() }}
-                                <span class="pl-3"><i class="fa fa-comments"></i> <a href="#">14 comments</a></span>
+                                @if ( $ticket->comments->count() > 0 )
+                                    <span class="pl-3"><i class="fa fa-comments"></i> <a href="/tickets/{{ $ticket->id }}#comment">{{ $ticket->comments->count() }} comments</a></span>
+                                @endif
                             </p>
                         </div>
                     @empty

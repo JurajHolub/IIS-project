@@ -24,3 +24,5 @@ Route::get('/tickets', 'TicketController@index')->name('issues');
 Route::post('/tickets', 'TicketController@store');
 Route::get('/tickets/create', 'TicketController@create');
 Route::get('/tickets/{detail}', 'TicketController@show');
+
+Route::post('/comments', 'CommentController@store');
