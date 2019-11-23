@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $request = request()->validate([
@@ -44,5 +51,31 @@ class TicketController extends Controller
 
 
         return view('ticket.index', compact('tickets','sort'));
+    }
+
+    public function create()
+    {
+        return view('ticket.create', compact('tickets'));
+    }
+
+    public function store()
+    {
+        $data = request()->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'priority' => 'required',
+        ]);
+        request()->validate(['image' => 'nullable|image']);
+
+        $user = User::find(Auth::id());
+        $user->tickets()->create($data);
+
+        return $this->index();
+    }
+
+    public function show($id)
+    {
+        $ticket = Ticket::find($id);
+        return view('ticket.detail', compact('ticket'));
     }
 }
