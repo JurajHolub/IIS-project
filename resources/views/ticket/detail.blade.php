@@ -16,7 +16,7 @@
         <br>
         <h3>Comments</h3>
         <div class="list-group">
-            @foreach ($comments as $comment)
+            @foreach ($ticket->comments as $comment)
                 <a class="list-group-item">
                     <h4 class="list-group-item-heading">{{ $comment->id }}</h4>
                     <h6 class="list-group-item-heading">{{ $comment->created_at }}</h6>
