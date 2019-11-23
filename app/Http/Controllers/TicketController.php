@@ -55,7 +55,7 @@ class TicketController extends Controller
 
     public function create()
     {
-        return view('ticket.create', compact('tickets'));
+        return view('ticket.create');
     }
 
     public function store()

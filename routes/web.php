@@ -21,7 +21,6 @@ Route::get('/profile', 'EditProfileController@index')->name('profile');
 Route::post('/profile', 'EditProfileController@update');
 
 Route::get('/tickets', 'TicketController@index')->name('issues');
-
+Route::post('/tickets', 'TicketController@store');
 Route::get('/tickets/create', 'TicketController@create');
-Route::post('/tickets/create', 'TicketController@store');
 Route::get('/tickets/{detail}', 'TicketController@show');
