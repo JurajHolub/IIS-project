@@ -31,3 +31,4 @@ Route::get('/tickets/create', 'TicketController@create');
 Route::get('/tickets/{detail}', 'TicketController@show');
 
 Route::post('/comments', 'CommentController@store');
+Route::post('/product_parts', 'ProductPartController@store');

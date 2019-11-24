@@ -14,7 +14,7 @@
             <p >{{ $ticket->description }}</p>
         </div>
         <br>
-        <h3 id="comment">Comments</h3id>
+        <h3 id="comment">Comments</h3>
         <div class="list-group">
             @foreach ($ticket->comments as $comment)
                 <a class="list-group-item">
