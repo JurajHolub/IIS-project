@@ -41,6 +41,11 @@
                             <a class="nav-link" href="{{ route('issues') }}">Issues</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('products') }}">Products</a>
+                        </li>
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
