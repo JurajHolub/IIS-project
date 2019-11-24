@@ -22,6 +22,7 @@ class CreateTicketsTable extends Migration
             $table->timestamps();
 
             $table->bigInteger('author_id');
+            $table->bigInteger('product_part_id');
         });
     }
 

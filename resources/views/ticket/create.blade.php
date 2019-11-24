@@ -28,6 +28,19 @@
                     <option>10</option>
                 </select>
             </div>
+            <div class="border">
+                <h4>Products:</h4>
+                @foreach ($products as $product)
+                    @foreach ($product->parts as $part)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="product_part_id[]" value="{{ $part->id }}"/>
+                            <label class="form-check-label" for="product_part_id[]">
+                                {{ $product->title }} - {{ $part->title }}
+                            </label>
+                        </div>
+                    @endforeach
+                @endforeach
+            </div>
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea name="description" class="form-control" rows="5" id="description" placeholder="Describe your issue..."></textarea>

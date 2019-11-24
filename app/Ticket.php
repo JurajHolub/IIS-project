@@ -19,4 +19,9 @@ class Ticket extends Model
     {
         return $this->hasMany('App\Comment')->orderBy('created_at', 'desc');
     }
+
+    public function product_parts()
+    {
+        return $this->hasMany('App\ProductPart')->orderBy('created_at', 'desc');
+    }
 }

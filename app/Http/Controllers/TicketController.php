@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ticket;
+use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,8 @@ class TicketController extends Controller
 
     public function create()
     {
-        return view('ticket.create');
+        $products = Product::get();
+        return view('ticket.create', compact('products'));
     }
 
     public function store()
@@ -72,7 +74,8 @@ class TicketController extends Controller
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             'priority' => ['required', 'numeric', 'integer'],
-            'image' => ['nullable', 'image']
+            'product_part_id' => ['required'],
+            'image' => ['nullable', 'image'],
         ]);
 
         $ticket = new Ticket([
@@ -81,6 +84,7 @@ class TicketController extends Controller
             'state' => 'open',
             'priority' => $data['priority'],
             'author_id' => Auth::id(),
+            'product_part_id' => $data['product_part_id']
         ]);
 
         $ticket->save();
@@ -91,6 +95,7 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::find($id);
-        return view('ticket.detail', compact('ticket'));
+        $products = $ticket->product_parts();
+        return view('ticket.detail', compact('ticket', 'products'));
     }
 }

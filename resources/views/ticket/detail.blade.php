@@ -9,6 +9,14 @@
         <h6><b>State:</b> {{ $ticket->state }}</h6>
         <h6><b>Created:</b> {{ $ticket->created_at }}</h6>
         <h6><b>Last actualized:</b> {{ $ticket->updated_at }}</h6>
+        <div class="list-group border">
+            <h6><b>Products:</b></h6>
+            @foreach ($products as $product)
+                <a class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ $product->title }}</h4>
+                </a>
+            @endforeach
+        </div>
         <div class="border">
             <h6><b>Description:</b></h6>
             <p >{{ $ticket->description }}</p>
