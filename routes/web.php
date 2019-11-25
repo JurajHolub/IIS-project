@@ -38,3 +38,11 @@ Route::get('/tickets/create', 'TicketController@create');
 Route::get('/tickets/{detail}', 'TicketController@show');
 
 Route::post('/comments', 'CommentController@store');
+
+Route::get('/users', 'EditProfileController@index')->name('users');
+Route::post('/users', 'EditProfileController@store');
+Route::get('/users/create', 'EditProfileController@create');
+Route::get('/users/{user}', 'EditProfileController@show');
+Route::get('/users/{user}/edit', 'EditProfileController@edit');
+Route::patch('/users/{user}', 'EditProfileController@update');
+Route::delete('/users/{user}', 'EditProfileController@destroy');
