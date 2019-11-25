@@ -19,4 +19,9 @@ class ProductPart extends Model
     {
         return $this->belongsTo('App\Product');
     }
+
+    public function ticket()
+    {
+        return $this->belongsToMany('App\Ticket', 'ticket_product_parts');
+    }
 }

@@ -11,9 +11,9 @@
         <h6><b>Last actualized:</b> {{ $ticket->updated_at }}</h6>
         <div class="list-group border">
             <h6><b>Products:</b></h6>
-            @foreach ($products as $product)
+            @foreach ($ticket->product_parts as $part)
                 <a class="list-group-item">
-                    <h4 class="list-group-item-heading">{{ $product->title }}</h4>
+                    <h4 class="list-group-item-heading">{{ $part->title }}</h4>
                 </a>
             @endforeach
         </div>

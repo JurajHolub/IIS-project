@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ProductPart;
 use App\Ticket;
 use App\Product;
+use App\TicketProductPart;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,10 +86,12 @@ class TicketController extends Controller
             'state' => 'open',
             'priority' => $data['priority'],
             'author_id' => Auth::id(),
-            'product_part_id' => $data['product_part_id']
         ]);
-
         $ticket->save();
+        foreach ($data['product_part_id'] as $part)
+        {
+            $ticket->product_parts()->attach(ProductPart::find([$part]));
+        }
 
         return redirect('/tickets/'.$ticket->id);
     }
@@ -95,7 +99,6 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::find($id);
-        $products = $ticket->product_parts();
         return view('ticket.detail', compact('ticket', 'products'));
     }
 }

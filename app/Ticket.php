@@ -22,6 +22,6 @@ class Ticket extends Model
 
     public function product_parts()
     {
-        return $this->hasMany('App\ProductPart')->orderBy('created_at', 'desc');
+        return $this->belongsToMany('App\ProductPart', 'ticket_product_parts');
     }
 }
