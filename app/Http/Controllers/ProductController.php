@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
+use function Sodium\compare;
 
 class ProductController extends Controller
 {
@@ -62,6 +63,35 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         return view('product.detail', compact('product'));
+    }
+
+    public function edit(\App\Product $product)
+    {
+        return view('product.edit', compact('product'));
+    }
+
+    public function update(\App\Product $product)
+    {
+        $data = request()->validate([
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'version' => ['required', 'string'],
+        ]);
+
+        $product->update([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'version' => $data['version'],
+            'author_id' => Auth::id(),
+        ]);
+
+        return $this->show($product->id);
+    }
+
+    public function destroy(\App\Product $product)
+    {
+        $product->delete();
+        return redirect('/products');
     }
 
 }

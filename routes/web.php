@@ -23,7 +23,14 @@ Route::post('/profile', 'EditProfileController@update');
 Route::get('/products', 'ProductController@index')->name('products');
 Route::get('/products/create', 'ProductController@create')->middleware('auth');
 Route::post('/products', 'ProductController@store')->middleware('auth');
-Route::get('/products/{detail}', 'ProductController@show');
+Route::get('/products/{product}', 'ProductController@show');
+Route::get('/products/{product}/edit', 'ProductController@edit');
+Route::patch('/products/{product}/edit', 'ProductController@update');
+Route::delete('/products/{product}', 'ProductController@destroy');
+
+Route::post('/products/{product}/parts', 'ProductPartController@store');
+Route::patch('/products/{product}/parts/{part}', 'ProductPartController@update');
+Route::delete('/products/{product}/parts/{product_part}', 'ProductPartController@destroy');
 
 Route::get('/tickets', 'TicketController@index')->name('issues');
 Route::post('/tickets', 'TicketController@store');
@@ -31,4 +38,3 @@ Route::get('/tickets/create', 'TicketController@create');
 Route::get('/tickets/{detail}', 'TicketController@show');
 
 Route::post('/comments', 'CommentController@store');
-Route::post('/product_parts', 'ProductPartController@store');
