@@ -52,9 +52,9 @@ class ProductPartController extends Controller
         return back();
     }
 
-    public function destroy(Product $product, \App\ProductPart $productPart)
+    public function destroy(Product $product, \App\ProductPart $part)
     {
-        $productPart->delete();
+        $part->delete();
 
         return back();
     }

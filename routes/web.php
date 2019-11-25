@@ -30,7 +30,7 @@ Route::delete('/products/{product}', 'ProductController@destroy');
 
 Route::post('/products/{product}/parts', 'ProductPartController@store');
 Route::patch('/products/{product}/parts/{part}', 'ProductPartController@update');
-Route::delete('/products/{product}/parts/{product_part}', 'ProductPartController@destroy');
+Route::delete('/products/{product}/parts/{part}', 'ProductPartController@destroy');
 
 Route::get('/tickets', 'TicketController@index')->name('issues');
 Route::post('/tickets', 'TicketController@store');
