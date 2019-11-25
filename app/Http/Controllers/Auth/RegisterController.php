@@ -70,6 +70,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'name' => $data['name'],
             'surname' => $data['surname'],
+            'role' => \App\Enums\UserRole::Customer,
             'password' => Hash::make($data['password']),
         ]);
     }

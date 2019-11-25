@@ -34,6 +34,19 @@
                     <input name="surname" type="text" class="form-control" id="surname" autocomplete="off"
                            value="{{ $user->surname }}">
                 </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select class="form-control" id="role" name="role">
+                        <option>Admin</option>
+                        <option>Director</option>
+                        <option>Manager</option>
+                        <option>Employee</option>
+                        <option>Customer</option>
+                    </select>
+                    @error('role')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
                 <h6><b>Created:</b> {{ $user->created_at }}</h6>
                 <h6><b>Last actualized:</b> {{ $user->updated_at }}</h6>
                 <button type="submit" id="submit" class="btn btn-success">Update user</button>

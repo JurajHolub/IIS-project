@@ -42,10 +42,10 @@
                 <input name="surname" type="text" class="form-control" id="surname" autocomplete="off">
             </div>
             <div class="form-group">
-                <label for="password0">Enter password</label>
-                <input name="password0" type="password" class="form-control" id="password0" autocomplete="off" value="">
-                <label for="password0">Reenter password</label>
-                <input name="password1" type="password" class="form-control" id="password1" autocomplete="off" value="">
+                <label for="password">Enter password</label>
+                <input name="password" type="password" class="form-control" id="password" autocomplete="off" value="">
+                <label for="password_confirmation">Reenter password</label>
+                <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" autocomplete="off" value="">
             </div>
             <button type="submit" id="submit" class="btn btn-success">Create user</button>
         </form>

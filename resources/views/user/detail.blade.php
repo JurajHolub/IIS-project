@@ -17,7 +17,7 @@
                 </form>
             </div>
         </div>
-        <h6><b>Role:</b> TODO:roles</h6>
+        <h6><b>Role:</b> {{ \App\Enums\UserRole::MapFrom[$user->role] }}</h6>
         <h6><b>Name:</b> {{ $user->name }}  {{$user->surname}}</h6>
         <h6><b>Email:</b> {{ $user->email }}</h6>
         <h6><b>Created:</b> {{ $user->created_at }}</h6>

@@ -62,17 +62,19 @@ class EditProfileController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
             'name' => ['nullable', 'string', 'max:255'],
             'surname' => ['nullable', 'string', 'max:255'],
-            'password0' => ['nullable', 'string'], // TODO verify
-            'password1' => ['nullable', 'string'],
+            'password' => ['required', 'string', 'required_with:password_confirmation', 'same:password_confirmation'], // TODO verify
+            'password_confirmation' => ['required', 'string'],
+            'role' => ['required'], //TODO check if enum
         ]);
+
 
         $product = new \App\User([
             'login' => $data['login'],
             'email' => $data['email'],
             'name' => $data['name'],
             'surname' => $data['surname'],
-            'password0' => $data['password0'],
-            'password1' => $data['password1'],
+            'password' => password_hash($data['password']),
+            'role' => \App\Enums\UserRole::MapTo[$data['role']],
         ]);
 
         $product->save();
@@ -87,6 +89,7 @@ class EditProfileController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
             'name' => ['nullable', 'string', 'max:255'],
             'surname' => ['nullable', 'string', 'max:255'],
+            'role' => ['required']
         ]);
 
         $user->update([
@@ -94,6 +97,7 @@ class EditProfileController extends Controller
             'email' => $data['email'],
             'name' => $data['name'],
             'surname' => $data['surname'],
+            'role' => \App\Enums\UserRole::MapTo[$data['role']],
         ]);
 
         return view('user.edit', compact('user'));
@@ -109,5 +113,12 @@ class EditProfileController extends Controller
                     ]);
         }
         return redirect()->back();
+    }
+
+    public function destroy(\App\User $user)
+    {
+        $user->delete();
+
+        return redirect('/users');
     }
 }
