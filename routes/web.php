@@ -22,7 +22,7 @@ Route::post('/profile', 'EditProfileController@update');
 
 Route::get('/products', 'ProductController@index')->name('products');
 Route::get('/products/create', 'ProductController@create')->middleware('auth');
-Route::post('/products', 'ProductController@store')->middlewarw('auth');
+Route::post('/products', 'ProductController@store')->middleware('auth');
 Route::get('/products/{detail}', 'ProductController@show');
 
 Route::get('/tickets', 'TicketController@index')->name('issues');
