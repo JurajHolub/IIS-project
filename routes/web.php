@@ -46,3 +46,7 @@ Route::get('/users/{user}', 'EditProfileController@show');
 Route::get('/users/{user}/edit', 'EditProfileController@edit');
 Route::patch('/users/{user}', 'EditProfileController@update');
 Route::delete('/users/{user}', 'EditProfileController@destroy');
+
+Route::get('/tasks', 'TaskController@index')->name('tasks');
+Route::get('/tasks/create', 'TaskController@create');
+Route::post('/tasks', 'TaskController@store');

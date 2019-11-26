@@ -73,7 +73,7 @@ class EditProfileController extends Controller
             'email' => $data['email'],
             'name' => $data['name'],
             'surname' => $data['surname'],
-            'password' => password_hash($data['password']),
+            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'role' => \App\Enums\UserRole::MapTo[$data['role']],
         ]);
 

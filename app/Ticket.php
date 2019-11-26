@@ -24,4 +24,9 @@ class Ticket extends Model
     {
         return $this->belongsToMany('App\ProductPart', 'ticket_product_parts');
     }
+
+    public function tasks()
+    {
+        return $this->belongsToMany('App\Task', 'ticket_task');
+    }
 }
