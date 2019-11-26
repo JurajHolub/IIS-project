@@ -42,6 +42,13 @@
                         <option>Manager</option>
                         <option>Employee</option>
                         <option>Customer</option>
+                        @foreach(\App\Enums\UserRole::MapFrom as $role)
+                            <option value="{{ \App\Enums\UserRole::MapTo[$role]}}"
+                                    @if($user->role === \App\Enums\UserRole::MapTo[$role])
+                                    selected
+                                @endif
+                            >{{ $role }}</option>
+                        @endforeach
                     </select>
                     @error('role')
                     <div class="alert alert-danger">{{ $message }}</div>

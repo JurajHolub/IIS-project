@@ -26,12 +26,12 @@ class ProductPartController extends Controller
         ]);
 
         $part->save();
-        return redirect('/products/'.$product->id.'/edit');
+        return redirect('/products/'.$product->id);
     }
 
     public function edit(Product $product, \App\ProductPart $part)
     {
-        return view('product.edit', compact('product'));
+        return view('product_part.edit', compact('product', 'part'));
     }
 
     public function update(\App\Product $product, \App\ProductPart $part)
@@ -49,13 +49,13 @@ class ProductPartController extends Controller
             'author_id' => Auth::id(),
         ]);
 
-        return back();
+        return redirect('/products/'.$product->id);
     }
 
     public function destroy(Product $product, \App\ProductPart $part)
     {
         $part->delete();
 
-        return back();
+        return redirect('/products/'.$product->id);
     }
 }
