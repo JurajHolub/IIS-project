@@ -79,5 +79,52 @@ class TaskController extends Controller
         return redirect('/tasks');
     }
 
+    public function show(Task $task)
+    {
+        return view('task.detail', compact('task'));
+    }
+
+    public function edit(Task $task)
+    {
+        $tickets = Ticket::all();
+        $employees = User::whereIn(
+            'role', [UserRole::Employee, UserRole::Manager, UserRole::Director, UserRole::Admin])
+            ->get();
+        return view('task.edit', compact('task', 'tickets', 'employees'));
+    }
+
+    public function update(Task $task)
+    {
+        $data = request()->validate([
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'state' => ['required', 'string'],
+            'allocated_hours' => ['required', 'integer'],
+            'spent_hours' => ['required', 'integer'],
+            'ticket_id' => ['required'],
+            'user_id' => ['required'],
+        ]);
+
+        $task->update([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'state' => $data['state'],
+            'allocated_hours' => $data['allocated_hours'],
+            'spent_hours' => $data['spent_hours'],
+            'ticket_id' => $data['ticket_id'],
+            'user_id' => $data['user_id'],
+        ]);
+
+        $task->employees()->sync($data['user_id']);
+        $task->tickets()->sync($data['ticket_id']);
+
+        return $this->edit($task);
+    }
+
+    public function destroy(Task $task)
+    {
+        $task->delete();
+        return redirect('/tasks');
+    }
 
 }

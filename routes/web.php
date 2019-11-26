@@ -50,3 +50,7 @@ Route::delete('/users/{user}', 'EditProfileController@destroy');
 Route::get('/tasks', 'TaskController@index')->name('tasks');
 Route::get('/tasks/create', 'TaskController@create');
 Route::post('/tasks', 'TaskController@store');
+Route::get('/tasks/{task}', 'TaskController@show');
+Route::get('/tasks/{task}/edit', 'TaskController@edit');
+Route::patch('/tasks/{task}/edit', 'TaskController@update');
+Route::delete('/tasks/{task}', 'TaskController@destroy');
