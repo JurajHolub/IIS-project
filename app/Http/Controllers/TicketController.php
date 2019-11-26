@@ -99,6 +99,39 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::find($id);
-        return view('ticket.detail', compact('ticket', 'products'));
+        return view('ticket.detail', compact('ticket'));
+    }
+
+    public function edit(Ticket $ticket)
+    {
+        $product_parts = ProductPart::all();
+        return view('ticket.edit', compact('ticket', 'product_parts'));
+    }
+
+    public function update(Ticket $ticket)
+    {
+        $data = request()->validate([
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'state' => ['required', 'integer'],
+            'product_part_id' => ['required'],
+        ]);
+
+        $ticket->update([
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'state' => $data['state'],
+        ]);
+
+        $ticket->product_parts()->sync($data['product_part_id']);
+
+        return redirect('/tickets');
+    }
+
+    public function destroy(Ticket $ticket)
+    {
+        $ticket->comments()->delete();
+        $ticket->delete();
+        return redirect('/tickets');
     }
 }

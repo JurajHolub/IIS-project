@@ -35,7 +35,10 @@ Route::delete('/products/{product}/parts/{part}', 'ProductPartController@destroy
 Route::get('/tickets', 'TicketController@index')->name('issues');
 Route::post('/tickets', 'TicketController@store');
 Route::get('/tickets/create', 'TicketController@create');
-Route::get('/tickets/{detail}', 'TicketController@show');
+Route::get('/tickets/{ticket}', 'TicketController@show');
+Route::get('/tickets/{ticket}/edit', 'TicketController@edit');
+Route::patch('/tickets/{ticket}/edit', 'TicketController@update');
+Route::delete('/tickets/{ticket}', 'TicketController@destroy');
 
 Route::post('/comments', 'CommentController@store');
 
