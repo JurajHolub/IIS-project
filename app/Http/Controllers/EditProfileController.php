@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\MatchPassword;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,11 @@ class EditProfileController extends Controller
         return view('user.edit', compact('user'));
     }
 
+    public function profile(\App\User $user)
+    {
+        return view('user.profile', compact('user'));
+    }
+
     public function create()
     {
         return view('user.create');
@@ -82,7 +88,41 @@ class EditProfileController extends Controller
         return redirect('/users');
     }
 
-    public function update(\App\User $user)
+    public function updateUser(\App\User $user)
+    {
+        $data = request()->validate([
+            'login' => ['required', 'string', Rule::unique('users')->ignore(Auth::id())],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
+            'name' => ['nullable', 'string', 'max:255'],
+            'surname' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $user->update([
+            'login' => $data['login'],
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'surname' => $data['surname'],
+        ]);
+
+        return view('/home');
+    }
+
+    public function updatePasswd(\App\User $user)
+    {
+        $data = request()->validate([
+            'password-old' => ['required', 'string', 'max:255', new MatchPassword],
+            'password' => ['required', 'string', 'required_with:password_confirmation', 'same:password_confirmation'], // TODO verify
+            'password_confirmation' => ['required', 'string'],
+        ]);
+
+        $user->update([
+            'password' => Hash::make(request("password")),
+        ]);
+
+        return view('/home');
+    }
+
+    public function updateAdmin(\App\User $user)
     {
         $data = request()->validate([
             'login' => ['required', 'string', Rule::unique('users')->ignore(Auth::id())],
@@ -115,10 +155,17 @@ class EditProfileController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(\App\User $user)
+    public function destroyAdmin(\App\User $user)
     {
         $user->delete();
 
         return redirect('/users');
+    }
+
+    public function destroyUser(\App\User $user)
+    {
+        $user->delete();
+
+        return redirect('/home');
     }
 }

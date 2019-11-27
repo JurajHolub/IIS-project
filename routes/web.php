@@ -17,8 +17,10 @@ Auth::routes(['reset' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/profile', 'EditProfileController@index')->name('profile');
-Route::post('/profile', 'EditProfileController@update');
+Route::get('/users/profile/{user}/edit', 'EditProfileController@profile')->middleware('customer');
+Route::post('/users/profile/{user}/edit', 'EditProfileController@updateUser')->middleware('customer');
+Route::post('/users/profile/{user}/passwd', 'EditProfileController@updatePasswd')->middleware('customer');
+Route::delete('/users/profile/{user}', 'EditProfileController@destroyUser')->middleware('customer');
 
 Route::get('/products', 'ProductController@index')->name('products');
 Route::get('/products/create', 'ProductController@create')->middleware('auth');
@@ -43,13 +45,13 @@ Route::delete('/tickets/{ticket}', 'TicketController@destroy');
 
 Route::post('/comments', 'CommentController@store');
 
-Route::get('/users', 'EditProfileController@index')->name('users');
-Route::post('/users', 'EditProfileController@store');
-Route::get('/users/create', 'EditProfileController@create');
-Route::get('/users/{user}', 'EditProfileController@show');
-Route::get('/users/{user}/edit', 'EditProfileController@edit');
-Route::patch('/users/{user}', 'EditProfileController@update');
-Route::delete('/users/{user}', 'EditProfileController@destroy');
+Route::get('/users', 'EditProfileController@index')->name('users')->middleware('admin');
+Route::post('/users', 'EditProfileController@store')->middleware('admin');
+Route::get('/users/create', 'EditProfileController@create')->middleware('admin');
+Route::get('/users/{user}', 'EditProfileController@show')->middleware('admin');
+Route::get('/users/{user}/edit', 'EditProfileController@edit')->middleware('admin');
+Route::patch('/users/{user}', 'EditProfileController@updateAdmin')->middleware('admin');
+Route::delete('/users/{user}', 'EditProfileController@destroyAdmin')->middleware('admin');
 
 Route::get('/tasks', 'TaskController@index')->name('tasks');
 Route::get('/tasks/create', 'TaskController@create');

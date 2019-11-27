@@ -43,9 +43,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('products') }}">Products</a>
                         </li>
+                        @if(Auth::user() && Auth::user()->role == \App\Enums\UserRole::Admin)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('users') }}">Users</a>
                         </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('tasks') }}">Tasks</a>
                         </li>
@@ -70,7 +72,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                    <a class="dropdown-item" href="/users/profile/{{ Auth::user()->id }}/edit ">
                                         {{ __('Edit profile') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
