@@ -16,8 +16,8 @@ class DirectorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()
-            && !in_array($request->user()->role, [UserRole::Director, UserRole::Admin], true))
+        if (!$request->user()
+            || !in_array($request->user()->role, [UserRole::Director, UserRole::Admin], true))
             return redirect('/home');
 
         return $next($request);

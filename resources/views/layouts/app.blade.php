@@ -48,9 +48,11 @@
                             <a class="nav-link" href="{{ route('users') }}">Users</a>
                         </li>
                         @endif
+                        @if(Auth::user() && \App\Enums\UserRole::employee(Auth::user()->role))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('tasks') }}">Tasks</a>
                         </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

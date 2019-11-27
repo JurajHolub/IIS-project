@@ -20,7 +20,9 @@
                 </form>
             </div>
             <div class="col-lg-2 offset-lg-7">
+            @if(Auth::user() && \App\Enums\UserRole::manager(Auth::user()->role))
                 <a class="btn btn-success btn-block" href="/products/create">New product</a>
+            @endif
             </div>
         </div>
 

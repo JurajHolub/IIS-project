@@ -5,7 +5,8 @@
 @section('content')
     <div class="container">
         <div>
-            <form class="form-horizontal border p-3">
+            <form method="POST" action="/tickets/search" class="form-horizontal border p-3">
+                @csrf
                 <div class="row mt-1 mb-1">
                     <div class="col-2"><label>Search in ticket title</label></div>
                     <div class="col"><input name="ticket" id="ticket" class="form-control" type="text" /></div>
@@ -30,9 +31,7 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="align-self-center w-25 mb-1">
-                    <a class="btn btn-success btn-block" href="/tickets/search">Search</a>
-                </div>
+                <button type="submit" id="submit" class="btn btn-success">Search</button>
             </form>
         </div>
         <div class="row mb-3 mt-3">
@@ -52,7 +51,9 @@
                 </form>
             </div>
             <div class="col-lg-2 offset-lg-7">
-                <a class="btn btn-success btn-block" href="/tickets/create">New issue</a>
+                @if(Auth::user())
+                    <a class="btn btn-success btn-block" href="/tickets/create">New issue</a>
+                @endif
             </div>
         </div>
         <div class="row">

@@ -13,12 +13,14 @@
                 <h6><b>Last actualized:</b> {{ $ticket->updated_at }}</h6>
             </div>
             <div class="col-lg-2 offset-lg-7">
+                @if(Auth::user())
                 <a class="btn btn-success btn-block" href="/tickets/{{ $ticket->id }}/edit">Edit</a>
                 <form method="post" action="/tickets/{{ $ticket->id }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-success btn-block mt-1" >Delete</button>
                 </form>
+                @endif
             </div>
         </div>
         <h6><b>Products:</b></h6>
@@ -44,7 +46,8 @@
                 </a>
             @endforeach
         </div>
-        <div class="border p-2">
+        @if(Auth::user())
+            <div class="border p-2">
             <form method="POST" action="/comments">
                 @csrf
                 <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
@@ -52,5 +55,6 @@
                 <button type="submit" id="submit" class="btn btn-success">Post</button>
             </form>
         </div>
+        @endif
     </div>
 @endsection

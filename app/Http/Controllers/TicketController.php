@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function search()
     {
         $request = request()->validate([
@@ -27,7 +22,11 @@ class TicketController extends Controller
             'state' => ['string'],
         ]);
 
+        dd($request);
+
         //TODO search queryes
+        $author = User::where('login', $request['author'])->first();
+        dd($author);
 
         return $this->index();
     }

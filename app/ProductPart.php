@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductPart extends Model
 {
     protected $fillable = [
-        'title', 'description', 'author_id', 'product_id', 'version'
+        'title', 'description', 'version'
     ];
 
     public function author()
