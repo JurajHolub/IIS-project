@@ -4,7 +4,38 @@
 
 @section('content')
     <div class="container">
-        <div class="row mb-3">
+        <div>
+            <form class="form-horizontal border p-3">
+                <div class="row mt-1 mb-1">
+                    <div class="col-2"><label>Search in ticket title</label></div>
+                    <div class="col"><input name="ticket" id="ticket" class="form-control" type="text" /></div>
+                </div>
+                <div class="row mt-1 mb-1">
+                    <div class="col-2"><label>Search by product</label></div>
+                    <div class="col"><input name="product" id="product" class="form-control" type="text" /></div>
+                </div>
+                <div class="row mt-1 mb-1">
+                    <div class="col-2"><label>Search by author</label></div>
+                    <div class="col"><input name="author" id="author" class="form-control" type="text" /></div>
+                </div>
+                <div class="row mt-1 mb-1">
+                    <div class="col-2"><label>State of issues</label></div>
+                    <div class="col">
+                        @foreach(\App\Enums\TaskTicketState::MapFrom as $state)
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="state[]"
+                                       value="{{ \App\Enums\TaskTicketState::MapTo[$state] }}" checked>
+                                <label class="form-check-label" for="state_id[]">{{ $state }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="align-self-center w-25 mb-1">
+                    <a class="btn btn-success btn-block" href="/tickets/search">Search</a>
+                </div>
+            </form>
+        </div>
+        <div class="row mb-3 mt-3">
             <div class="col-lg-3 mb-3 mb-lg-0">
                 <form method="GET" action="">
                     <div class="input-group">
@@ -24,7 +55,6 @@
                 <a class="btn btn-success btn-block" href="/tickets/create">New issue</a>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="list-group">

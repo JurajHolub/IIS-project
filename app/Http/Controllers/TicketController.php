@@ -18,6 +18,20 @@ class TicketController extends Controller
         $this->middleware('auth');
     }
 
+    public function search()
+    {
+        $request = request()->validate([
+            'ticket' => ['string'],
+            'product' => ['string'],
+            'author' => ['string'],
+            'state' => ['string'],
+        ]);
+
+        //TODO search queryes
+
+        return $this->index();
+    }
+
     public function index()
     {
         $request = request()->validate([
@@ -26,7 +40,6 @@ class TicketController extends Controller
 
         if (!isset($request["sort"]) || $request["sort"] === "Recently updated")
         {
-            //source: https://laracasts.com/discuss/channels/laravel/how-do-i-sort-posts-both-by-posts-created-at-and-comments-created-at
             $tickets = Ticket::all()
                 ->sortByDesc(function ($ticket) {
                     $recentComment = $ticket->comments->sortByDesc('created_at')->first();
