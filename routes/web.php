@@ -18,8 +18,8 @@ Auth::routes(['reset' => false]);
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/users/profile/{user}/edit', 'EditProfileController@profile')->middleware('customer');
-Route::post('/users/profile/{user}/edit', 'EditProfileController@updateUser')->middleware('customer');
-Route::post('/users/profile/{user}/passwd', 'EditProfileController@updatePasswd')->middleware('customer');
+Route::patch('/users/profile/{user}/edit', 'EditProfileController@updateuser')->middleware('customer');
+Route::patch('/users/profile/{user}/passwd', 'EditProfileController@updatepasswd')->middleware('customer');
 Route::delete('/users/profile/{user}', 'EditProfileController@destroyUser')->middleware('customer');
 
 Route::get('/products', 'ProductController@index')->name('products');

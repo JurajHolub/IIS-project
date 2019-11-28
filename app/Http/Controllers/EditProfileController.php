@@ -88,7 +88,7 @@ class EditProfileController extends Controller
         return redirect('/users');
     }
 
-    public function updateUser(\App\User $user)
+    public function updateuser(\App\User $user)
     {
         $data = request()->validate([
             'login' => ['required', 'string', Rule::unique('users')->ignore(Auth::id())],
@@ -107,7 +107,7 @@ class EditProfileController extends Controller
         return view('/home');
     }
 
-    public function updatePasswd(\App\User $user)
+    public function updatepasswd(\App\User $user)
     {
         $data = request()->validate([
             'password-old' => ['required', 'string', 'max:255', new MatchPassword],

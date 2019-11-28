@@ -14,8 +14,9 @@
                         <label class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
                         <label class="col-md-4 col-form-label text-md-left">{{ \App\Enums\UserRole::MapFrom[$user->role] }}</label>
 
-                        <form method="POST" action="/users/profile{{ $user->id }}/edit">
+                        <form method="POST" action="/users/profile/{{ $user->id }}/edit">
                             @csrf
+                            @method('PATCH')
 
                             <div class="form-group row">
                                 <label for="login" class="col-md-4 col-form-label text-md-right">{{ __('Login') }}</label>
@@ -96,6 +97,7 @@
                     <div class="card-body">
                         <form method="POST" action="/users/profile/{{ $user->id }}/passwd">
                             @csrf
+                            @method('PATCH')
 
                             <div class="form-group row">
                                 <label for="password-old" class="col-md-4 col-form-label text-md-right">{{ __('Old password') }}</label>
