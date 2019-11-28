@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TaskTicketState;
 use App\ProductPart;
 use App\Ticket;
 use App\Product;
@@ -9,26 +10,57 @@ use App\TicketProductPart;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class TicketController extends Controller
 {
-    public function search()
+    public function search(Request $request, Ticket $ticket)
     {
-        $request = request()->validate([
-            'ticket' => ['string'],
-            'product' => ['string'],
-            'author' => ['string'],
-            'state' => ['string'],
+        $data= $request->validate([
+            'ticket' => ['string', 'nullable'],
+            'product' => ['string', 'nullable'],
+            'author' => ['string', 'nullable'],
+            'state' => ['array'],
+            'state.*' => ['numeric']
         ]);
 
-        dd($request);
+        $ticket = $ticket->newQuery();
 
-        //TODO search queryes
-        $author = User::where('login', $request['author'])->first();
-        dd($author);
+        if ($request->has('ticket') && !empty($request['ticket'])) {
+            $ticket->where('title', 'LIKE', "%{$request->input('ticket')}%");
+        }
+        if ($request->has('product') && !empty($request['product'])) {
+            $ticket->whereHas('product_parts', function ($query) use ($request) {
+                $query->where('title', 'LIKE', "%{$request->input('product')}%")
+                    ->orWhereHas('product', function ($query) use ($request) {
+                    $request->input('title', 'LIKE', "%{$request->input('product')}%");
+                });
+            });
+        }
+        if ($request->has('author') && !empty($request['author'])) {
+            $ticket->whereHas('author', function ($query) use ($request) {
+                $query->where(DB::raw("CONCAT(users.name,' ',users.surname)"), 'LIKE', "%{$request->input('author')}%")
+                    ->orWhere('login', 'LIKE', "%{$request->input('author')}%");
+            });
+        }
+        if ($request->has('state') && !empty($request['state'])) {
+            $mapped_state = [];
+            foreach ($request['state'] as $state) {
+                array_push($mapped_state, TaskTicketState::MapFrom[$state]);
+            }
+            $ticket->whereIn('state', $mapped_state);
+        }
+        else {
+            $sort = "recently_updated";
+            $tickets = [];
+            return view('ticket.index', compact('tickets','sort'));
 
-        return $this->index();
+        }
+
+        $tickets = $ticket->get();
+        $sort = "recently_updated";
+        return view('ticket.index', compact('tickets','sort'));
     }
 
     public function index()

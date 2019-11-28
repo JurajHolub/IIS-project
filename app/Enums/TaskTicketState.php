@@ -10,16 +10,16 @@ final class TaskTicketState
     const Closed = 3;
 
     const MapTo = [
-        'Open' => self::Open,
-        'Pending' => self::Pending,
-        'Resolved' => self::Resolved,
-        'Closed' => self::Closed,
+        'open' => self::Open,
+        'pending' => self::Pending,
+        'resolved' => self::Resolved,
+        'closed' => self::Closed,
     ];
 
     const MapFrom = [
-        self::Open => 'Open',
-        self::Pending => 'Pending',
-        self::Resolved => 'Resolved',
-        self::Closed => 'Closed',
+        self::Open => 'open',
+        self::Pending => 'pending',
+        self::Resolved => 'resolved',
+        self::Closed => 'closed',
     ];
 }
