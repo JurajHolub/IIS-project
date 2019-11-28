@@ -43,15 +43,15 @@
                             @csrf
                             <div class="row mt-1 mb-1">
                                 <div class="col-2"><label>Search in ticket title</label></div>
-                                <div class="col"><input name="ticket" id="ticket" class="form-control" type="text"/></div>
+                                <div class="col"><input name="ticket" id="ticket" class="form-control" type="text" value="{{ old('ticket') }}"/></div>
                             </div>
                             <div class="row mt-1 mb-1">
                                 <div class="col-2"><label>Search by product</label></div>
-                                <div class="col"><input name="product" id="product" class="form-control" type="text"/></div>
+                                <div class="col"><input name="product" id="product" class="form-control" type="text" value="{{ old('product') }}"/></div>
                             </div>
                             <div class="row mt-1 mb-1">
                                 <div class="col-2"><label>Search by author</label></div>
-                                <div class="col"><input name="author" id="author" class="form-control" type="text"/></div>
+                                <div class="col"><input name="author" id="author" class="form-control" type="text" value="{{ old('author') }}"/></div>
                             </div>
                             <div class="row mt-1 mb-1">
                                 <div class="col-2"><label>State of issues</label></div>
