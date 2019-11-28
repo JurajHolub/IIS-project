@@ -17,6 +17,7 @@ class TicketController extends Controller
 {
     public function search(Request $request, Ticket $ticket)
     {
+        $request->flash();
         $data= $request->validate([
             'ticket' => ['string', 'nullable'],
             'product' => ['string', 'nullable'],
@@ -103,7 +104,6 @@ class TicketController extends Controller
             $tickets = Ticket::orderBy('updated_at', 'desc')->get();
             $sort = "recently_updated";
         }
-
 
         return view('ticket.index', compact('tickets','sort'));
     }
