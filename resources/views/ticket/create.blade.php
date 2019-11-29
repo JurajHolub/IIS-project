@@ -8,24 +8,34 @@
             @csrf
             <div class="form-group">
                 <label for="title">Title</label>
-                <input name="title" type="text" class="form-control" id="title" placeholder="Enter title" autocomplete="off">
+                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Enter title" value="{{ old('title') }}" autocomplete="off">
                 @error('title')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="form-group">
                 <label for="priority">Priority</label>
-                <select class="form-control" id="priority" name="priority">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
+                <select id="priority" class="form-control" name="priority">
+                    <option
+                        {{ old('priority', 1) == 1 ? 'selected' : '' }}>1</option>
+                    <option
+                        {{ old('priority', 1) == 2 ? 'selected' : '' }}>2</option>
+                     <option
+                        {{ old('priority', 1) == 3 ? 'selected' : '' }}>3</option>
+                     <option
+                        {{ old('priority', 1) == 4 ? 'selected' : '' }}>4</option>
+                     <option
+                        {{ old('priority', 1) == 5 ? 'selected' : '' }}>5</option>
+                     <option
+                        {{ old('priority', 1) == 6 ? 'selected' : '' }}>6</option>
+                     <option
+                        {{ old('priority', 1) == 7 ? 'selected' : '' }}>7</option>
+                     <option
+                        {{ old('priority', 1) == 8 ? 'selected' : '' }}>8</option>
+                     <option
+                        {{ old('priority', 1) == 9 ? 'selected' : '' }}>9</option>
+                     <option
+                        {{ old('priority', 1) == 10 ? 'selected' : '' }}>10</option>
                 </select>
             </div>
             <div class="border">
@@ -33,17 +43,21 @@
                 @foreach ($products as $product)
                     @foreach ($product->parts as $part)
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="product_part_id[]" value="{{ $part->id }}"/>
-                            <label class="form-check-label" for="product_part_id[]">
+                            <input id="product_part_{{ $part->id }}" type="checkbox" class="form-check-input" name="product_part_id[]" value="{{ $part->id }}"
+                                   @if(is_array(old('product_part_id')) && in_array($part->id, old('product_part_id'))) checked @endif/>
+                            <label class="form-check-label" for="product_part_{{ $part->id }}">
                                 {{ $product->title }} - {{ $part->title }}
                             </label>
                         </div>
                     @endforeach
                 @endforeach
             </div>
+            @error('product_part_id')
+            <div class="alert alert-danger">Please select product</div>
+            @enderror
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control" rows="5" id="description" placeholder="Describe your issue..."></textarea>
+                <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="5" placeholder="Describe your issue...">{{ old('description') }}</textarea>
                 @error('description')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
