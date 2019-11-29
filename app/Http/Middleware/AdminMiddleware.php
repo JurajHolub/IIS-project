@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         if (!$request->user() || $request->user()->role != \App\Enums\UserRole::Admin)
-            return redirect('/home');
+            abort(401);
 
         return $next($request);
     }
