@@ -4,9 +4,13 @@
 
 @section('content')
     <div class="container">
-
-        <div class="row mb-3">
-            <div class="col-lg-3 mb-3 mb-lg-0">
+        <div class="row mb-2">
+            <div class="col-lg-2 mb-3 mb-lg-0 offset-lg-6 order-lg-3">
+                @if(Auth::user())
+                    <a class="btn btn-success btn-block" href="/tickets/create">New issue</a>
+                @endif
+            </div>
+            <div class="col-lg-3 mb-3 mb-lg-0 order-lg-1">
                 <form method="GET" action="">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -21,17 +25,13 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-1">
+            <div class="col-lg-1 order-lg-2">
                 <button class="btn btn-secondary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample"
                         aria-expanded="false" aria-controls="collapseExample">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <div class="col-lg-2 offset-lg-6">
-                @if(Auth::user())
-                    <a class="btn btn-success btn-block" href="/tickets/create">New issue</a>
-                @endif
-            </div>
+
         </div>
 
         <div class="row mb-3">
@@ -77,10 +77,10 @@
                 <div class="list-group">
                     @forelse($tickets as $ticket)
                         <div class="list-group-item my-link" id="ticket-{{ $ticket->id }}">
-                            <strong><a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a></strong>
+                            <strong><a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a></strong> <span class="ml-3 badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ $ticket->state }}</span>
                             <p class="info mb-0 mt-3 p-0">
                                 Opened by <a href="#">{{ $ticket->author->login }}</a>
-                                {{ $ticket->updated_at->diffForHumans() }}
+                                {{ $ticket->created_at->diffForHumans() }}
                                 @if ( $ticket->comments->count() > 0 )
                                     <span class="pl-3"><i class="fa fa-comments"></i> <a
                                             href="/tickets/{{ $ticket->id }}#comment">{{ $ticket->comments->count() }} comments</a></span>

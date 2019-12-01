@@ -164,17 +164,18 @@ class TicketController extends Controller
         $ticket->update([
             'title' => $data['title'],
             'description' => $data['description'],
-            'state' => $data['state'],
+            'state' => TaskTicketState::MapFrom[$data['state']],
         ]);
 
         $ticket->product_parts()->sync($data['product_part_id']);
 
-        return redirect('/tickets');
+        return redirect('/tickets/'.$ticket->id);
     }
 
     public function destroy(Ticket $ticket)
     {
         $ticket->comments()->delete();
+        $ticket->product_parts()->detach();
         $ticket->delete();
         return redirect('/tickets');
     }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\UserRole;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,5 +51,29 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->belongsToMany('App\Task', 'user_task');
+    }
+
+    public function isAdmin() {
+        return $this->role == \App\Enums\UserRole::Admin;
+    }
+
+    public function isDirector() {
+        return in_array($this->role, [UserRole::Director, UserRole::Admin], true);
+    }
+
+    public function isManager() {
+        return in_array($this->role, [UserRole::Manager, UserRole::Director, UserRole::Admin], true);
+    }
+
+    public function isEmployee() {
+        return in_array($this->role, [UserRole::Employee, UserRole::Manager, UserRole::Director, UserRole::Admin], true);
+    }
+
+    public function isCustomer() {
+        return in_array($this->role, [UserRole::Customer, UserRole::Employee, UserRole::Manager, UserRole::Director, UserRole::Admin], true);
+    }
+
+    public function isAuthorOfTicket($ticket_id) {
+        return $this->tickets()->find($ticket_id);
     }
 }

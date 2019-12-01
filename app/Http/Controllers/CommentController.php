@@ -24,6 +24,6 @@ class CommentController extends Controller
         ]);
 
         $ticket->save();
-        return redirect('/tickets/'.$data['ticket_id']."#comment");
+        return redirect('/tickets/'.$data['ticket_id']."#comments");
     }
 }
