@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="border p-1 mb-5">
-            <form method="post" action="{{ $user->id }}">
+            <form method="post">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">

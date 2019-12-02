@@ -21,11 +21,11 @@
 	<dt>Autoři</dt>
 	<dd>Juraj Holub<!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
 	    <a href="mailto:xholub40@stud.fit.vutbr.cz">xholub40@stud.fit.vutbr.cz</a> -
-		Návrh ER-diagramu, schémy databázy, implementácia GUI a databázy cez Laravel framework.
+        Návrh ER-diagramu, návrh schémy databázy a sql, návrh a implementácia backendu, návrh a implementácia GUI.
 	</dd>
 	<dd>Matej Parobek <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
 	    <a href="mailto:xparob00@stud.fit.vutbr.cz">xparob00@stud.fit.vutbr.cz</a> -
-        Návrh ER-diagramu, schémy databázy, implementácia GUI a databázy cez Laravel framework.
+        Návrh ER-diagramu, návrh schémy databázy a sql, návrh a implementácia backendu, návrh a implementácia GUI.
 	</dd>
 	<dt>URL aplikace</dt>
 	<dd><a href="http://www.stud.fit.vutbr.cz/~xparob00/IIS">http://www.stud.fit.vutbr.cz/~xparob00/IIS</a></dd>
@@ -47,9 +47,64 @@
 </p>
 
 <h2>Implementace</h2>
-<p>Stručná dokumentace k implementaci, která popisuje, které části projektu (např. PHP skripty) implementují jednotlivé případy použití.</p>
-
+<p>Pre implementáciu backendu sme zvolili PHP framework Laravel. Použili sme databázový systém MySQL. Webové rozhranie používa html a framework Bootstrap, ktorý zabezpečuje vizuálnu stránku s použitím css.
+Javascript sa v projekte vyskytuje, len vygenerovaný frameworkom Bootstrap alebo Laravel.</p>
+<h3>Backend</h3>
+<p>
+    Backend využíva framework Laravel a všetky jeho výhody. Autorizáciu a registráciu užívateľa vytvoril modul auth, ktorý je možné do frameworku nainštalovať. Správu jednotlivých entít zabezpečujú kontroléry, ktoré s nachádzajú v priečinku <tt>app/Http/Controllers/</tt>:
+</p>
+<ul>
+    <li>
+        <strong>CommentController</strong> - spravuje užívateľské komentáre k tiketom
+    </li>
+    <li>
+        <strong>EditProfileController</strong> - spravuje užívateľov
+    </li>
+    <li>
+        <strong>ProductController</strong> - spravuje produkty
+    </li>
+    <li>
+        <strong>ProductPartController</strong> - spravuje časti produktov
+    </li>
+    <li>
+        <strong>TaskController</strong> - spravuje úkoly
+    </li>
+    <li>
+        <strong>TicketController</strong> - spravuje tikety
+    </li>
+</ul>
+<p>
+    Kontroléry spravujú logiku a pre prezentačnú vrstvu sú použité Blade templates ktoré nájdeme v <tt>resources/views/</tt>. Každý zo 4 hlavných kontorolérov pre správu užívateľov, tiketov, produktov a úkolov využíva doporučenie frameworku a pomenováva jenotlivé blade templates nasledovne:
+</p>
+<ul>
+    <li>
+        <strong>index.blade.php</strong> - pre zobrazenie listového modelu všetkých entít
+    </li>
+    <li>
+        <strong>detail.blade.php</strong> - pre zobrazenie detailu entity
+    </li>
+    <li>
+        <strong>create.blade.php</strong> - formulár pre vytvorenie novej entity
+    </li>
+    <li>
+        <strong>edit.blade.php</strong> - formulár pre úpravu entity
+    </li>
+</ul>
+<p>
+    Blade template umožňuje okrem definovania jazyka html aj vloženie špeciálneho kódu, ktorý zabezpečuje prezentačnú logiku ako naplnenie fromulárov pri úprave entity, udržanie hodnôt formulára pri nesprávnom vstupe a chybové hlášky a generovanie tlačidiel a odkazov k častiam aplikácie podľa oprávnení.
+    Blade template <tt>resources/views/layouts/app.blade.php</tt> ukladá hlavičku html a menu, ktoré používajú jenotlivé Blade templates. <tt>resources/views/auth</tt> sú frameworkom vygenerované formuláre pre registráciu a prihlásenie užívateľa.
+</p>
+<p>
+    Formuláre sú chranené proti podvrhnutiu, tokenom generovaným frameworkom.
+</p>
+<h3>Frontend</h3>
+<p>
+    Využíva html a framework Bootstrap. Javascript nie je použitý a pre načítanie nových entít, ktoré vznikli v priebehu času je nutné použiť obnovenie stránky.
+</p>
 <h3>Databáze</h3>
+<p>
+    Pre databázu bol pôvodne vytvorený skript sql, ktorý však nie je kompatibilný so súčasným riešením, pretože inštalovaný modul pre autorizáciu vyžaduje špeciálne tabuľky, ktoré vytvára pomocou modelov a migrácií frameworku. Preto sme aj pre zvyšné tabuľky použili modely frameworku a pre vytvorenie databázy migrácie.
+</p>
 
 Schéma tabuliek v relačnej databáze.
 
@@ -57,15 +112,31 @@ Schéma tabuliek v relačnej databáze.
 
 <h2>Instalace</h2>
 
-Stručně popište:
+<h3>Postup instalace na server Apache</h3>
 <ul>
-<li>postup instalace na server,</li>
-<li>softwarové požadavky (verze PHP apod.),</li>
-<li>jak rozbalit, konfigurovat, inicializovat databázi, ...</li>
+    <li>nakonfigurujeme súbor .env</li>
+    <li><tt>composer install</tt></li>
+    <li><tt>php artisan migrate</tt></li>
+    <li><tt>php artisan key:generate</tt></li>
+    <li>skopírujeme obsah priečinka public do koreňového adresára serveru Apache</li>
+    <li>upravíme cesty v index.php v koreňovom adresáry serveru Apache, aby smerovali ku koreňovému adresáru aplikácie</li>
+
 </ul>
+<h3>Softwarové požadavky</h3>
+<ul>
+    <li>composer</li>
+    <li>npm</li>
+    <li>internet pre stiahnutie balíčkov manažérom npm a composer</li>
+    <li>php 7.2</li>
+    <li>MySQL</li>
 
+</ul>
 <h2>Známé problémy</h2>
-<p>Zde popište, které body zadání nejsou implementovány a z jakého důvodu. Např. &bdquo;Z časových důvodů nebyla implementována správa uživatelů.&rdquo; Pomůžete tím zrychlit hodnocení, když neimplementované funkce nebudeme muset dlouze hledat.</p>
-
+<ul>
+    <li>Možné nefunkčné odkazy, ktoré na verejnom servery opravím</li>
+    <li>Chybajúce prvky UX</li>
+    <li>Nepredvídateľné chovanie</li>
+    <li>Z odovzdaných súborov nie je možné poskladať funkčnú aplikáciu</li>
+</ul>
 </body>
 </html>
