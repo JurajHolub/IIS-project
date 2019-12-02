@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use Illuminate\Http\Request;
 use App\Product;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use function Sodium\compare;
 
@@ -61,8 +63,11 @@ class ProductController extends Controller
 
     public function show($id)
     {
+        $managers = User::whereIn(
+            'role', [UserRole::Manager, UserRole::Director, UserRole::Admin])
+            ->get();
         $product = Product::find($id);
-        return view('product.detail', compact('product'));
+        return view('product.detail', compact('product', 'managers'));
     }
 
     public function edit(\App\Product $product)

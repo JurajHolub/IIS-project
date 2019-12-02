@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\ProductPart;
+use App\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,7 @@ class ProductPartController extends Controller
             'title' => ['required', 'string'],
             'version' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'manager_id' => ['required'],
         ]);
 
         $part = new ProductPart([
@@ -22,6 +24,7 @@ class ProductPartController extends Controller
             'description' => $data['description'],
             'version' => $data['version'],
             'author_id' => Auth::id(),
+            'manager_id' => $data['manager_id'],
             'product_id' => $product->id,
         ]);
 
@@ -31,7 +34,11 @@ class ProductPartController extends Controller
 
     public function edit(Product $product, \App\ProductPart $part)
     {
-        return view('product_part.edit', compact('product', 'part'));
+        $managers = User::whereIn(
+            'role', [UserRole::Manager, UserRole::Director, UserRole::Admin])
+            ->get();
+
+        return view('product_part.edit', compact('product', 'part', 'managers'));
     }
 
     public function update(\App\Product $product, \App\ProductPart $part)

@@ -21,6 +21,7 @@ class ProductParts extends Migration
             $table->timestamps();
 
             $table->bigInteger('author_id');
+            $table->bigInteger('manager_id');
             $table->bigInteger('product_id');
         });
     }

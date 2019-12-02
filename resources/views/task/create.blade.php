@@ -28,17 +28,6 @@
                     <input class="form-control" type="number" value="1" id="allocated_hours" name="allocated_hours">
                 </div>
             </div>
-            <h6>Assigned to tickets:</h6>
-            <div class="border">
-                @foreach ($tickets as $ticket)
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="ticket_id[]" value="{{ $ticket->id }}"/>
-                        <label class="form-check-label" for="ticket_id[]">
-                            {{ $ticket->title }}
-                        </label>
-                    </div>
-                @endforeach
-            </div>
             <h6>Assigned to employees:</h6>
             <div class="border">
                 @foreach ($employees as $employee)
