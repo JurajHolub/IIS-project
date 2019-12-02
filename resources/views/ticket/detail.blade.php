@@ -51,7 +51,7 @@
                         <h3 class="mx-3 my-3 p-0">Comments</h3>
                         @if(Auth::user())
                             <div class="border p-2 m-2">
-                                <form method="POST" action="{{ $ticket->id }}/comments">
+                                <form method="POST" action="../comments">
                                     @csrf
                                     <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
                                     <div class="form-group m-0 mb-1 p-0">
