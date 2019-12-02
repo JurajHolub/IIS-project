@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-lg-2 mb-3 mb-lg-0 order-lg-2">
                 @if(Auth::user() && \App\Enums\UserRole::manager(Auth::user()->role))
-                    <a class="btn btn-success btn-block" href="tasks/{{ $task->id }}/edit">Edit</a>
-                    <form method="post" action="tasks/{{ $task->id }}">
+                    <a class="btn btn-success btn-block" href="{{ $task->id }}/edit">Edit</a>
+                    <form method="post" action="{{ $task->id }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-success btn-block mt-1" >Delete</button>

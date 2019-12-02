@@ -9,8 +9,8 @@
                 <h1>{{ $user->login }}</h1>
             </div>
             <div class="col-lg-2 offset-lg-7">
-                <a class="btn btn-success btn-block" href="users/{{ $user->id }}/edit">Edit</a>
-                <form method="post" action="users/{{ $user->id }}">
+                <a class="btn btn-success btn-block" href="{{ $user->id }}/edit">Edit</a>
+                <form method="post" action="{{ $user->id }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-success btn-block mt-1" >Delete</button>

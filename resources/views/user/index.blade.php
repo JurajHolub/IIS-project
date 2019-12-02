@@ -20,7 +20,7 @@
                 </form>
             </div>
             <div class="col-lg-2 offset-lg-7">
-                <a class="btn btn-success btn-block" href="users/create">New user</a>
+                <a class="btn btn-success btn-block" href="create">New user</a>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
                 <div class="list-group">
                     @forelse($users as $user)
                         <div class="list-group-item my-link" id="user-{{ $user->id }}">
-                            <strong><a href="users/{{ $user->id }}">{{ $user->login }}</a></strong>
+                            <strong><a href="{{ $user->id }}">{{ $user->login }}</a></strong>
                             <p class="info mb-0 mt-3 p-0">
                                 Last updated: {{ $user->updated_at->diffForHumans() }}
                             </p>

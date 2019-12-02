@@ -7,7 +7,7 @@
         <div class="row mb-2">
             <div class="col-lg-2 mb-3 mb-lg-0 offset-lg-6 order-lg-3">
                 @if(Auth::user())
-                    <a class="btn btn-success btn-block" href="tickets/create">New issue</a>
+                    <a class="btn btn-success btn-block" href="create">New issue</a>
                 @endif
             </div>
             <div class="col-lg-3 mb-3 mb-lg-0 order-lg-1">
@@ -39,7 +39,7 @@
                 <div class="collapse" id="collapseExample">
                     <div class="card">
                         <div class="card-header"><i class="fa fa-search"></i></div>
-                        <form method="POST" action="tickets/search" class="form-horizontal border p-3">
+                        <form method="POST" action="search" class="form-horizontal border p-3">
                             @csrf
                             <div class="row mt-1 mb-1">
                                 <div class="col-2"><label>Search in ticket title</label></div>
@@ -79,7 +79,7 @@
                         <div class="list-group-item my-link" id="ticket-{{ $ticket->id }}">
                             <h6>
                                 <strong>
-                                    <a href="tickets/{{ $ticket->id }}">{{ $ticket->title }}</a>
+                                    <a href="{{ $ticket->id }}">{{ $ticket->title }}</a>
                                 </strong>
                                 <span class="align-center ml-3 badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ \App\Enums\TaskTicketState::MapFrom[$ticket->state] }}</span>
 
@@ -89,7 +89,7 @@
                                 {{ $ticket->created_at->diffForHumans() }}
                                 @if ( $ticket->comments->count() > 0 )
                                     <span class="pl-3"><i class="fa fa-comments"></i> <a
-                                            href="tickets/{{ $ticket->id }}#comment">{{ $ticket->comments->count() }} comments</a></span>
+                                            href="{{ $ticket->id }}#comment">{{ $ticket->comments->count() }} comments</a></span>
                                 @endif
                             </p>
                         </div>
