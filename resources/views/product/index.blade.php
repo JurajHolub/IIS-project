@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-2 offset-lg-7">
             @if(Auth::user() && \App\Enums\UserRole::manager(Auth::user()->role))
-                <a class="btn btn-success btn-block" href="/products/create">New product</a>
+                <a class="btn btn-success btn-block" href="products/create">New product</a>
             @endif
             </div>
         </div>
@@ -33,7 +33,7 @@
                         <div class="list-group-item my-link" id="ticket-{{ $product->id }}">
                             <h6>
                                 <strong>
-                                    <a href="/products/{{ $product->id }}">{{ $product->title }}</a>
+                                    <a href="products/{{ $product->id }}">{{ $product->title }}</a>
                                 </strong>
                             </h6>
                             <p class="text-secondary my-0 py-0">

@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-lg-2 mb-3 mb-lg-0 order-lg-2">
                 @if(Auth::user() && \App\Enums\UserRole::manager(Auth::user()->role))
-                    <a class="btn btn-success btn-block" href="/tasks/{{ $task->id }}/edit">Edit</a>
-                    <form method="post" action="/tasks/{{ $task->id }}">
+                    <a class="btn btn-success btn-block" href="tasks/{{ $task->id }}/edit">Edit</a>
+                    <form method="post" action="tasks/{{ $task->id }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-success btn-block mt-1" >Delete</button>
@@ -65,7 +65,7 @@
                         @if(Auth::user() && $task->employees()->find(Auth::user()))
                             <div class="border p-2 m-2">
                                 <h4>Update solution</h4>
-                                <form method="POST" action="/solutions/{{ $task->id }}">
+                                <form method="POST" action="solutions/{{ $task->id }}">
                                     @csrf
                                     @method('PATCH')
                                     <div class="form-group row mt-1 mb-1">

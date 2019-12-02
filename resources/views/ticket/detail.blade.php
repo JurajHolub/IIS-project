@@ -12,8 +12,8 @@
                         <div class="row">
                             <div class="col-lg-2 mb-3 mb-lg-0 order-lg-2">
                                 @if(Auth::user() && (Auth::user()->isAuthorOfTicket($ticket->id) || Auth::user()->isManager()))
-                                    <a class="btn btn-success btn-block" href="/tickets/{{ $ticket->id }}/edit">Edit</a>
-                                    <form method="post" action="/tickets/{{ $ticket->id }}">
+                                    <a class="btn btn-success btn-block" href="tickets/{{ $ticket->id }}/edit">Edit</a>
+                                    <form method="post" action="tickets/{{ $ticket->id }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-success btn-block mt-1">Delete</button>
@@ -51,7 +51,7 @@
                         <h3 class="mx-3 my-3 p-0">Comments</h3>
                         @if(Auth::user())
                             <div class="border p-2 m-2">
-                                <form method="POST" action="/comments">
+                                <form method="POST" action="comments">
                                     @csrf
                                     <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
                                     <div class="form-group m-0 mb-1 p-0">

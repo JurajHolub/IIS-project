@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-lg-2 mb-3 mb-lg-0 order-lg-2">
                 @if(Auth::user() && \App\Enums\UserRole::manager(Auth::user()->role))
-                    <a class="btn btn-success btn-block" href="/products/{{ $product->id }}/edit">Edit</a>
-                    <form method="post" action="/products/{{ $product->id }}">
+                    <a class="btn btn-success btn-block" href="products/{{ $product->id }}/edit">Edit</a>
+                    <form method="post" action="products/{{ $product->id }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-success btn-block mt-1">Delete</button>
@@ -53,8 +53,8 @@
                         <div class="col-lg-2">
                             @if(Auth::user() && \App\Enums\UserRole::manager(Auth::user()->role))
                                 <a class="btn btn-success btn-block"
-                                   href="/products/{{ $product->id }}/parts/{{ $part->id }}/edit">Edit</a>
-                                <form method="post" action="/products/{{ $product->id }}/parts/{{ $part->id }}">
+                                   href="products/{{ $product->id }}/parts/{{ $part->id }}/edit">Edit</a>
+                                <form method="post" action="products/{{ $product->id }}/parts/{{ $part->id }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-success btn-block mt-1">Delete</button>
@@ -70,7 +70,7 @@
                             <div class="col">
                                 <h4>Add product part</h4>
                                 <hr class="my-2">
-                                <form method="POST" action="/products/{{ $product->id }}/parts">
+                                <form method="POST" action="products/{{ $product->id }}/parts">
                                     @csrf
                                     <div class="form-group">
                                         <div class="row">
