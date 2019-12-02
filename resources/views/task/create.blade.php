@@ -14,27 +14,29 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="state">State</label>
-                <select class="form-control" id="state" name="state">
-                    <option value="{{ \App\Enums\TaskTicketState::Open }}">Open</option>
-                    <option value="{{ \App\Enums\TaskTicketState::Pending }}">Pending</option>
-                    <option value="{{ \App\Enums\TaskTicketState::Resolved }}">Resolved</option>
-                    <option value="{{ \App\Enums\TaskTicketState::Closed }}">Closed</option>
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="allocated_hours" >Number of assigned hours</label>
                 <div >
                     <input class="form-control" type="number" value="1" id="allocated_hours" name="allocated_hours">
                 </div>
             </div>
-            <h6>Assigned to employees:</h6>
             <div class="border">
+                <h6>Assigned to employees:</h6>
                 @foreach ($employees as $employee)
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="user_id[]" value="{{ $employee->id }}"/>
                         <label class="form-check-label" for="user_id[]">
                             {{ $employee->login }}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+            <div class="border">
+                <h6>Related to tickets:</h6>
+                @foreach ($tickets as $ticket)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="ticket_id[]" value="{{ $ticket->id }}"/>
+                        <label class="form-check-label" for="ticket_id[]">
+                            {{ $ticket->title }}
                         </label>
                     </div>
                 @endforeach

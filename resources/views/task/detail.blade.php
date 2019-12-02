@@ -33,7 +33,7 @@
                 <li class="list-group-item"> Not assigned.</li>
             @endforelse
         </ul>
-        <h6><b>Assigned to tickets:</b></h6>
+        <h6><b>Assigned to ticket:</b></h6>
         <ul class="list-group">
             @forelse($task->tickets as $ticket)
                 <li class="list-group-item">{{ $ticket->title }}</li>
@@ -42,7 +42,7 @@
             @endforelse
         </ul>
         <h6><b>Description:</b></h6>
-        <p >{{ $ticket->description }}</p>
+        <p >{{ $task->description }}</p>
         <br>
         <div class="row">
             <div class="col-12">
