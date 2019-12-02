@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="border p-1 mb-5">
-            <form method="post">
+            <form method="post" action="..">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">
