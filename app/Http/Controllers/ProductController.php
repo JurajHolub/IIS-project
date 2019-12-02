@@ -85,13 +85,21 @@ class ProductController extends Controller
             'author_id' => Auth::id(),
         ]);
 
-        return $this->show($product->id);
+        return redirect('/products/'.$product->id);
     }
 
     public function destroy(\App\Product $product)
     {
+        foreach ($product->parts as $part) {
+            foreach ($part->ticket as $ticket) {
+                $ticket->comments()->delete();
+                $ticket->product_parts()->detach();
+                $ticket->delete();
+            }
+        }
+
+        $product->parts()->delete();
         $product->delete();
         return redirect('/products');
     }
-
 }

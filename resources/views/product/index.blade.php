@@ -31,10 +31,16 @@
                 <div class="list-group">
                     @forelse($products as $product)
                         <div class="list-group-item my-link" id="ticket-{{ $product->id }}">
-                            <strong><a href="/products/{{ $product->id }}">{{ $product->title }}</a></strong>
-                            <p class="info mb-0 mt-3 p-0">
-                                Opened by <a href="#">{{ $product->author->login }}</a>
-                                {{ $product->updated_at->diffForHumans() }}
+                            <h6>
+                                <strong>
+                                    <a href="/products/{{ $product->id }}">{{ $product->title }}</a>
+                                </strong>
+                            </h6>
+                            <p class="text-secondary my-0 py-0">
+                                Version: <span class="font-weight-bold">{{ $product->version }}</span>
+                            </p>
+                            <p class="text-secondary my-0 py-0">
+                                Actualized: <span class="font-weight-bold">{{ $product->updated_at->diffForHumans() }}</span>
                             </p>
                         </div>
                     @empty

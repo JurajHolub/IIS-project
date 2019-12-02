@@ -77,8 +77,14 @@
                 <div class="list-group">
                     @forelse($tickets as $ticket)
                         <div class="list-group-item my-link" id="ticket-{{ $ticket->id }}">
-                            <strong><a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a></strong> <span class="ml-3 badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ $ticket->state }}</span>
-                            <p class="info mb-0 mt-3 p-0">
+                            <h6>
+                                <strong>
+                                    <a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a>
+                                </strong>
+                                <span class="align-center ml-3 badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ $ticket->state }}</span>
+
+                            </h6>
+                            <p class="text-secondary my-0 p-0">
                                 Opened by <a href="#">{{ $ticket->author->login }}</a>
                                 {{ $ticket->created_at->diffForHumans() }}
                                 @if ( $ticket->comments->count() > 0 )

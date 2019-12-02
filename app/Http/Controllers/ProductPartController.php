@@ -54,6 +54,11 @@ class ProductPartController extends Controller
 
     public function destroy(Product $product, \App\ProductPart $part)
     {
+        foreach ($part->ticket as $ticket) {
+            $ticket->comments()->delete();
+            $ticket->product_parts()->detach();
+            $ticket->delete();
+        }
         $part->delete();
 
         return redirect('/products/'.$product->id);
