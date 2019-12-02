@@ -77,6 +77,7 @@ class TaskController extends Controller
             $task->employees()->attach($employee);
         }
 
+
         return redirect('/tasks');
     }
 

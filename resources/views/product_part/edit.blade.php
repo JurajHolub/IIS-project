@@ -33,6 +33,14 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label for="manager" >Manager:</label>
+                    <select class="form-control" id="manager" name="manager">
+                        @foreach ($managers as $manager)
+                            <option value="{{ $manager->id }}">{{ $manager->login }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <h6><b>Created:</b> {{ $part->created_at }}</h6>
                 <h6><b>Last actualized:</b> {{ $part->updated_at }}</h6>
                 <div class="form-group">

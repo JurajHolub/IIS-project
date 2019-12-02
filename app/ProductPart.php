@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class ProductPart extends Model
 {
     protected $fillable = [
-        'title', 'description', 'version', 'author_id', 'product_id'
+        'title', 'description', 'version', 'author_id', 'product_id', 'manager_id'
     ];
 
     public function author()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public function manager()
     {
         return $this->belongsTo('App\User');
     }
