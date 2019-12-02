@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-lg-3 mb-3 mb-lg-0">
-                <form method="GET" action="">
+                <form method="GET" action="tasks">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Sort:</span>
@@ -20,7 +20,7 @@
                 </form>
             </div>
             <div class="col-lg-2 offset-lg-7">
-                <a class="btn btn-success btn-block" href="create">New task</a>
+                <a class="btn btn-success btn-block" href="tasks/create">New task</a>
             </div>
         </div>
 
@@ -29,15 +29,15 @@
                 <div class="list-group">
                     @forelse($tasks as $task)
                         <div class="list-group-item my-link" id="task-{{ $task->id }}">
-                            <strong><a href="{{ $task->id }}">{{ $task->title }}</a></strong>
+                            <strong><a href="tasks/{{ $task->id }}">{{ $task->title }}</a></strong>
                             <p class="info mb-0 mt-3 p-0">
-                                Opened by <a href="#">{{ $task->manager->login }}</a>
+                                Opened by <a href="tasks#">{{ $task->manager->login }}</a>
                                 {{ $task->updated_at->diffForHumans() }}
                             </p>
                             <p class="info mb-0 mt-3 p-0">
                                 Assigned to
                                 @forelse($task->employees as $employee)
-                                    <a href="#">{{ $employee->login }}</a>
+                                    <a href="tasks#">{{ $employee->login }}</a>
                                 @empty
                                     no one...
                                 @endforelse

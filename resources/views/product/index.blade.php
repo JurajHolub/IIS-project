@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row mb-3">
             <div class="col-lg-3 mb-3 mb-lg-0">
-                <form method="GET" action="">
+                <form method="GET" action="products">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Sort:</span>
