@@ -24,4 +24,9 @@ class Task extends Model
     {
         return $this->belongsToMany('App\User', 'user_task');
     }
+
+    public function solutions()
+    {
+        return $this->hasMany('App\Solution')->orderBy('created_at', 'desc');
+    }
 }

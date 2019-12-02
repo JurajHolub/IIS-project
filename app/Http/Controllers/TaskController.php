@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRole;
+use App\Solution;
 use App\Task;
 use App\Ticket;
 use App\User;
@@ -91,6 +92,25 @@ class TaskController extends Controller
             'role', [UserRole::Employee, UserRole::Manager, UserRole::Director, UserRole::Admin])
             ->get();
         return view('task.edit', compact('task', 'tickets', 'employees'));
+    }
+
+    public function solve(Task $task)
+    {
+        $data = request()->validate([
+            'hours' => ['required', 'integer'],
+            'solution' => ['required', 'string'],
+        ]);
+
+        $solution = new Solution([
+            'description' => $data['solution'],
+            'author_id' => Auth::id(),
+            'task_id' => $task->id,
+        ]);
+        $solution->save();
+
+        $task->update(['spent_hours' => $task->spent_hours + $data['hours']]);
+
+        return view('task.detail', compact('task'));
     }
 
     public function update(Task $task)

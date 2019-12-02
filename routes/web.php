@@ -54,6 +54,7 @@ Route::get('/users/{user}/edit', 'EditProfileController@edit')->middleware('auth
 Route::patch('/users/{user}', 'EditProfileController@updateAdmin')->middleware('auth', 'admin');
 Route::delete('/users/{user}', 'EditProfileController@destroyAdmin')->middleware('auth', 'admin');
 
+Route::patch('/solutions/{task}', 'TaskController@solve')->middleware('auth', 'employee');
 Route::get('/tasks', 'TaskController@index')->name('tasks')->middleware('auth', 'employee');
 Route::get('/tasks/create', 'TaskController@create')->middleware('auth', 'manager');
 Route::post('/tasks', 'TaskController@store')->middleware('auth', 'manager');
