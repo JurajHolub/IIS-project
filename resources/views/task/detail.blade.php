@@ -65,7 +65,7 @@
                         @if(Auth::user() && $task->employees()->find(Auth::user()))
                             <div class="border p-2 m-2">
                                 <h4>Update solution</h4>
-                                <form method="POST" action="solutions/{{ $task->id }}">
+                                <form method="POST" action="../solutions/{{ $task->id }}">
                                     @csrf
                                     @method('PATCH')
                                     <div class="form-group row mt-1 mb-1">

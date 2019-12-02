@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Product;
 use App\ProductPart;
 use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
