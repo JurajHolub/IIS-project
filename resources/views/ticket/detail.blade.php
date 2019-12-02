@@ -22,7 +22,7 @@
                             </div>
                             <div class="col mb-3 mb-lg-0 order-lg-1">
                                 <h6><b>Priority:</b> {{ $ticket->priority }}</h6>
-                                <h6><b>State:</b> <span class="badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ $ticket->state }}</span></h6>
+                                <h6><b>State:</b> <span class="badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ \App\Enums\TaskTicketState::MapFrom[$ticket->state] }}</span></h6>
                                 <h6><b>Author:</b> {{ $ticket->author->login }}</h6>
                                 <h6><b>Actualized:</b> {{ $ticket->updated_at->format('G:i, j F y') }}</h6>
                                 <h6><b>Created:</b> {{ $ticket->created_at->format('G:i, j F y') }}</h6>

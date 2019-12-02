@@ -4,17 +4,14 @@
 
 @section('content')
     <div class="container">
-        <div class="row mb-3">
-            <div class="col-lg-3 mb-3 mb-lg-0">
+        <div class="row">
+            <div class="col">
                 <h1>{{ $task->title }}</h1>
-                <h6><b>State:</b> {{ \App\Enums\TaskTicketState::MapFrom[$task->state] }}</h6>
-                <h6><b>Created:</b> {{ $task->created_at }}</h6>
-                <h6><b>Last actualized:</b> {{ $task->updated_at }}</h6>
-                <h6><b>Assigned hours to fix:</b> {{ $task->allocated_hours }}</h6>
-                <h6><b>Already spent hours:</b> {{ $task->spent_hours }}</h6>
-                <h6><b>Managed by:</b> {{ $task->manager->login }}</h6>
+                <hr class="my-2">
             </div>
-            <div class="col-lg-2 offset-lg-7">
+        </div>
+        <div class="row">
+            <div class="col-lg-2 mb-3 mb-lg-0 order-lg-2">
                 @if(Auth::user() && \App\Enums\UserRole::manager(Auth::user()->role))
                     <a class="btn btn-success btn-block" href="/tasks/{{ $task->id }}/edit">Edit</a>
                     <form method="post" action="/tasks/{{ $task->id }}">
@@ -24,9 +21,17 @@
                     </form>
                 @endif
             </div>
+            <div class="col mb-3 mb-lg-0 order-lg-1">
+                <h6><b>State:</b> <span class="badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$task->state] }}">{{ \App\Enums\TaskTicketState::MapFrom[$task->state] }}</span></h6>
+                <h6><b>Created:</b> {{ $task->created_at->format('G:i, j F y') }}</h6>
+                <h6><b>Actualized:</b> {{ $task->updated_at->format('G:i, j F y') }}</h6>
+                <h6><b>Assigned hours to fix:</b> {{ $task->allocated_hours }}</h6>
+                <h6><b>Already spent hours:</b> {{ $task->spent_hours }}</h6>
+                <h6><b>Managed by:</b> {{ $task->manager->login }}</h6>
+            </div>
         </div>
         <h6><b>Assigned to employees:</b></h6>
-        <ul class="list-group">
+        <ul class="list-group mb-2 ml-2">
             @forelse($task->employees as $employee)
                 <li class="list-group-item">{{ $employee->login }}</li>
             @empty
@@ -34,7 +39,7 @@
             @endforelse
         </ul>
         <h6><b>Assigned to ticket:</b></h6>
-        <ul class="list-group">
+        <ul class="list-group mb-2 ml-2">
             @forelse($task->tickets as $ticket)
                 <li class="list-group-item">{{ $ticket->title }}</li>
             @empty
@@ -42,7 +47,7 @@
             @endforelse
         </ul>
         <h6><b>Description:</b></h6>
-        <p >{{ $task->description }}</p>
+        <p class="ml-2 mt-0 mb-2 py-0">{{ $task->description }}</p>
         <br>
         <div class="row">
             <div class="col-12">

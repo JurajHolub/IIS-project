@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('description');
-            $table->enum('state', ['open', 'pending', 'resolved', 'closed']);
+            $table->integer('state');
             $table->integer('priority');
             $table->timestamps();
 

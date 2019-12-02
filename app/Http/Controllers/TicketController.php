@@ -127,7 +127,7 @@ class TicketController extends Controller
         $ticket = new Ticket([
             'title' => $data['title'],
             'description' => $data['description'],
-            'state' => 'open',
+            'state' => TaskTicketState::Open,
             'priority' => $data['priority'],
             'author_id' => Auth::id(),
         ]);
@@ -164,7 +164,7 @@ class TicketController extends Controller
         $ticket->update([
             'title' => $data['title'],
             'description' => $data['description'],
-            'state' => TaskTicketState::MapFrom[$data['state']],
+            'state' => $data['state'],
         ]);
 
         $ticket->product_parts()->sync($data['product_part_id']);

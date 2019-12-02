@@ -81,7 +81,7 @@
                                 <strong>
                                     <a href="/tickets/{{ $ticket->id }}">{{ $ticket->title }}</a>
                                 </strong>
-                                <span class="align-center ml-3 badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ $ticket->state }}</span>
+                                <span class="align-center ml-3 badge {{ \App\Enums\TicketStateToBootstrapBadge::Map[$ticket->state] }}">{{ \App\Enums\TaskTicketState::MapFrom[$ticket->state] }}</span>
 
                             </h6>
                             <p class="text-secondary my-0 p-0">

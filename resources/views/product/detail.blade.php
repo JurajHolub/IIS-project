@@ -44,8 +44,8 @@
                         <div class="col mb-3 mb-lg-0">
                             <h6><b>Author:</b> {{ $part->author->login }}</h6>
                             <h6 ><b>Manager:</b> {{ $part->manager->login }}</h6>
-                            <h6><b>Actualized:</b> {{ $part->updated_at->format('G:i, j F y') }}</h6>
                             <h6><b>Created:</b> {{ $part->created_at->format('G:i, j F y') }}</h6>
+                            <h6><b>Actualized:</b> {{ $part->updated_at->format('G:i, j F y') }}</h6>
                             <h6><b>Version:</b> {{ $part->version }}</h6>
                             <h6><b>Description:</b></h6>
                             <p class="ml-2 my-0 py-0"> {{ $part->description }}</p>
@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
-                                            <label class="col-md-1" for="manager" >Manager:</label>
+                                            <label class="col-md-1" for="manager" >Manager</label>
                                             <div class="col">
                                                 <select class="form-control" id="manager_id" name="manager_id">
                                                     @foreach ($managers as $manager)

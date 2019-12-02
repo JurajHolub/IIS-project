@@ -119,7 +119,7 @@ class TaskController extends Controller
         $data = request()->validate([
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'state' => ['required', 'string'],
+            'state' => ['required', 'integer'],
             'allocated_hours' => ['required', 'integer'],
             'spent_hours' => ['required', 'integer'],
             'ticket_id' => ['required'],
@@ -139,7 +139,7 @@ class TaskController extends Controller
         $task->employees()->sync($data['user_id']);
         $task->tickets()->sync($data['ticket_id']);
 
-        return $this->edit($task);
+        return redirect('/tasks/'.$task->id);
     }
 
     public function destroy(Task $task)
