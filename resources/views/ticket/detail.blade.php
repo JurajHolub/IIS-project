@@ -12,8 +12,8 @@
                         <div class="row">
                             <div class="col-lg-2 mb-3 mb-lg-0 order-lg-2">
                                 @if(Auth::user() && (Auth::user()->isAuthorOfTicket($ticket->id) || Auth::user()->isManager()))
-                                    <a class="btn btn-success btn-block" href="tickets/{{ $ticket->id }}/edit">Edit</a>
-                                    <form method="post" action="tickets/{{ $ticket->id }}">
+                                    <a class="btn btn-success btn-block" href="{{ $ticket->id }}/edit">Edit</a>
+                                    <form method="post" action="{{ $ticket->id }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-success btn-block mt-1">Delete</button>
