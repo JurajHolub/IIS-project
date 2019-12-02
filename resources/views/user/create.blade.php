@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <form method="post" action="/users">
+        <form method="post" action="users">
             @csrf
             <div class="form-group">
                 <label for="login">Login</label>
