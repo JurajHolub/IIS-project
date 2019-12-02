@@ -125,8 +125,8 @@ class EditProfileController extends Controller
     public function updateAdmin(\App\User $user)
     {
         $data = request()->validate([
-            'login' => ['required', 'string', Rule::unique('users')->ignore(Auth::id())],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::id())],
+            'login' => ['required', 'string', Rule::unique('users')->ignore($user->id)],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
             'name' => ['nullable', 'string', 'max:255'],
             'surname' => ['nullable', 'string', 'max:255'],
             'role' => ['required']
@@ -141,18 +141,6 @@ class EditProfileController extends Controller
         ]);
 
         return view('user.edit', compact('user'));
-
-        //update everthing except password
-        \App\User::where('id', Auth::id())->update($data);
-
-        //update password
-        if (!is_null(request("password"))) {
-            \App\User::where('id', Auth::id())
-                ->update([
-                    'password' => Hash::make(request("password")),
-                    ]);
-        }
-        return redirect()->back();
     }
 
     public function destroyAdmin(\App\User $user)
