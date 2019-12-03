@@ -104,7 +104,7 @@ class EditProfileController extends Controller
             'surname' => $data['surname'],
         ]);
 
-        return view('/home');
+        return redirect()->back();
     }
 
     public function updatepasswd(\App\User $user)
@@ -119,7 +119,7 @@ class EditProfileController extends Controller
             'password' => Hash::make(request("password")),
         ]);
 
-        return view('/home');
+        return redirect()->back();
     }
 
     public function updateAdmin(\App\User $user)

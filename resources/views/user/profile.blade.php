@@ -14,7 +14,7 @@
                         <label class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
                         <label class="col-md-4 col-form-label text-md-left">{{ \App\Enums\UserRole::MapFrom[$user->role] }}</label>
 
-                        <form method="POST" action="profile/{{ $user->id }}/edit">
+                        <form method="POST">
                             @csrf
                             @method('PATCH')
 
@@ -95,7 +95,7 @@
                     <div class="card-header">{{ __('Update password') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="profile/{{ $user->id }}/passwd">
+                        <form method="POST" action="../{{ $user->id }}/passwd">
                             @csrf
                             @method('PATCH')
 
@@ -153,7 +153,7 @@
                     <div class="card-header">{{ __('Delete account') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="profile/{{ $user->id }}">
+                        <form method="POST" action="{{ url('/users/profile/'.$user->id) }}">
                             @csrf
                             @method('DELETE')
 
