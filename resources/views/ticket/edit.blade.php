@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="card card-body">
-            <form method="POST" action="..">
+            <form method="POST">
                 @csrf
                 @method('PATCH')
 {{--            ticket state can change only manager --}}

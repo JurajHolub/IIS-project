@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-            <form method="post" action="..">
+            <form method="post">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">

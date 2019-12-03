@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="border p-1 mb-5">
-            <form method="post" action="..">
+            <form method="post" action="../{{ $user->id }}">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">
@@ -37,17 +37,14 @@
                 <div class="form-group">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role">
-                        <option>Admin</option>
-                        <option>Director</option>
-                        <option>Manager</option>
-                        <option>Employee</option>
-                        <option>Customer</option>
                         @foreach(\App\Enums\UserRole::MapFrom as $role)
                             <option value="{{ \App\Enums\UserRole::MapTo[$role]}}"
                                     @if($user->role === \App\Enums\UserRole::MapTo[$role])
                                     selected
-                                @endif
-                            >{{ $role }}</option>
+                                    @endif
+                            >
+                                {{ $role }}
+                            </option>
                         @endforeach
                     </select>
                     @error('role')

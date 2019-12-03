@@ -111,7 +111,7 @@ class TaskController extends Controller
 
         $task->update(['spent_hours' => $task->spent_hours + $data['hours']]);
 
-        return view('task.detail', compact('task'));
+        return redirect()->back();
     }
 
     public function update(Task $task)

@@ -137,10 +137,10 @@ class EditProfileController extends Controller
             'email' => $data['email'],
             'name' => $data['name'],
             'surname' => $data['surname'],
-            'role' => \App\Enums\UserRole::MapTo[$data['role']],
+            'role' => $data['role'],
         ]);
 
-        return view('user.edit', compact('user'));
+        return redirect('/users/'.$user->id);
     }
 
     public function destroyAdmin(\App\User $user)

@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <form method="POST" action="/tasks">
+        <form method="POST" action="../tasks">
             @csrf
             <div class="form-group">
                 <label for="title">Title</label>
